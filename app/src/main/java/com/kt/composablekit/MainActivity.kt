@@ -33,7 +33,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
 //    rememberLauncherForActivityResult(contract = , onResult = )
-
     Text(
         text = "Hello $name!",
         modifier = modifier
