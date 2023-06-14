@@ -10,3 +10,7 @@ package com.kt.basickit
  *
  * 3. Request Permission
  */
+
+fun test(){
+    
+}
