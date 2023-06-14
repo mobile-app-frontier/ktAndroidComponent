@@ -12,5 +12,5 @@ package com.kt.basickit
  */
 
 fun test(){
-    
+
 }
