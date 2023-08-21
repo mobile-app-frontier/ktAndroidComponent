@@ -16,3 +16,4 @@ rootProject.name = "ComposableKit"
 //include ':app'
 include ':basicKit'
 include ':advancedKit'
+include ':bannerexampleapp'
