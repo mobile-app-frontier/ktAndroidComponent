@@ -85,6 +85,8 @@ public object BannerManager {
 
         val defaultBanners = bannerPolicy?.defaultBanner?.get(category) ?: return
 
+        if (defaultBanners.isEmpty()) { return }
+
         return DefaultBannerView(banners = defaultBanners, modifier = modifier)
     }
 

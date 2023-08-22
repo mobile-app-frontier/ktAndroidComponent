@@ -1,0 +1,44 @@
+package com.example.bannerexampleapp.core.logger
+
+import com.example.bannerexampleapp.BuildConfig
+import timber.log.Timber
+
+object Logger {
+    fun init() {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
+    }
+
+    fun i(t: Throwable) {
+        Timber.i(t)
+    }
+
+    fun i(message: String, vararg args: Any?) {
+        Timber.i(message, args)
+    }
+
+    fun e(t: Throwable) {
+        Timber.e(t)
+    }
+
+    fun e(message: String, vararg args: Any?) {
+        Timber.e(message, args)
+    }
+
+    fun w(t: Throwable) {
+        Timber.w(t)
+    }
+
+    fun w(message: String, vararg args: Any?) {
+        Timber.w(message, args)
+    }
+
+    fun d(t: Throwable) {
+        Timber.d(t)
+    }
+
+    fun d(message: String, vararg args: Any?) {
+        Timber.d(message, args)
+    }
+}

@@ -1,0 +1,94 @@
+package com.example.bannerexampleapp.ui.features.start
+
+import android.content.Context
+import androidx.lifecycle.viewModelScope
+import com.example.bannerexampleapp.BuildConfig
+import com.example.bannerexampleapp.core.base.StateViewModel
+import com.example.bannerexampleapp.core.datastore.PreferenceDataStore
+import com.example.bannerexampleapp.core.logger.Logger
+import com.example.bannerexampleapp.domain.usecase.BannerPolicyUseCase
+import com.kt.basickit.banner.LocalBannerPolicy
+import com.kt.basickit.banner.bloc.BannerPolicyBloc
+import com.kt.basickit.banner.bloc.BannerPolicyState
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import java.lang.Exception
+import java.lang.reflect.Type
+import javax.inject.Inject
+
+@HiltViewModel
+class StartViewModel @Inject constructor(
+    @ApplicationContext val application: Context,
+    private val preferenceDataStore: PreferenceDataStore,
+    private val useCase: BannerPolicyUseCase
+) : StateViewModel<StartState>(initialState = StartState.Loading) {
+    private val bannerPolicyBloc = BannerPolicyBloc(
+        context = application.applicationContext,
+        repository = useCase,
+        localBannerPolicyGetter = { return@BannerPolicyBloc readLocalBannerPolicy() },
+        localBannerPolicySetter = { saveLocalBannerPolicy(localBannerPolicy = it) },
+        appVersion = BuildConfig.VERSION_NAME,
+    )
+
+    init {
+        viewModelScope.launch {
+            bannerPolicyBloc.state.collect {
+                if (it is BannerPolicyState.Success) {
+                    updateState { StartState.Success(it.willShowBanner) }
+                }
+            }
+        }
+    }
+
+    fun fetchInitialData() {
+        Logger.d("fetch initial data")
+
+        viewModelScope.launch {
+            try {
+                bannerPolicyBloc.fetch()
+            } catch (e: Exception) {
+                Logger.e("fetching error: ${e.message}")
+                updateState { StartState.FailToInitialize }
+            }
+        }
+    }
+
+    suspend fun saveLocalBannerPolicy(localBannerPolicy: LocalBannerPolicy) {
+        Logger.d("LocalBannerPolicy write ${localBannerPolicyToJsonString(localBannerPolicy = localBannerPolicy)}")
+
+        preferenceDataStore.updateLocalBannerPolicy(localBannerPolicyToJsonString(localBannerPolicy = localBannerPolicy))
+    }
+
+    suspend fun readLocalBannerPolicy(): LocalBannerPolicy {
+        val jsonString = preferenceDataStore
+            .getLocalBannerPolicy()
+            .first()
+
+        Logger.d("LocalBannerPolicy read ${jsonStringToLocalBannerPolicy(jsonString)}")
+        return jsonStringToLocalBannerPolicy(jsonString) ?: mapOf()
+    }
+
+    private fun localBannerPolicyToJsonString(localBannerPolicy: LocalBannerPolicy): String {
+        val moshi = Moshi.Builder().build()
+        val type: Type = Types.newParameterizedType(Map::class.java, String::class.java, String::class.java)
+        val adapter: JsonAdapter<Map<String, String>> = moshi.adapter(type)
+
+        return adapter.toJson(localBannerPolicy)
+    }
+
+    private fun jsonStringToLocalBannerPolicy(jsonString: String): LocalBannerPolicy? {
+        if (jsonString.isEmpty()) {
+            return null
+        }
+
+        val moshi = Moshi.Builder().build()
+        val type: Type = Types.newParameterizedType(Map::class.java, String::class.java, String::class.java)
+        val adapter: JsonAdapter<Map<String, String>> = moshi.adapter(type)
+        return adapter.fromJson(jsonString)
+    }
+}
