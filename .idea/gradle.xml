@@ -12,6 +12,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/advancedKit" />
+            <option value="$PROJECT_DIR$/banner-example-app" />
             <option value="$PROJECT_DIR$/basicKit" />
           </set>
         </option>
