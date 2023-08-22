@@ -55,6 +55,9 @@ internal fun DefaultBannerView(banners: List<DefaultBannerPolicyItem>, modifier:
                     contentScale = ContentScale.FillWidth,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .clickable {
+                            BannerManager.sendToLandingType(banners[index].landingType)
+                        }
                 )
             }
         )

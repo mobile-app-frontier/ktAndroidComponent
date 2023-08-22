@@ -55,7 +55,7 @@ public object BannerManager {
     public val landingType: SharedFlow<BannerLandingType>
         get() = mutableLandingType.asSharedFlow()
 
-    internal fun sendToLandingType(landingType: BannerLandingType, dismiss: () -> Unit) {
+    internal fun sendToLandingType(landingType: BannerLandingType, dismiss: () -> Unit = {}) {
         scope.launch {
             mutableLandingType.emit(landingType)
 
