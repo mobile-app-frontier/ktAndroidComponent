@@ -18,7 +18,7 @@ import com.kt.basickit.banner.BannerManager
 import com.kt.basickit.banner.domain.entity.BannerCloseType
 
 @Composable
-fun PopupBannerOptionButton(bannerId: String, closeType: BannerCloseType) {
+fun PopupBannerOptionButton(bannerId: String, closeType: BannerCloseType, dismiss: () -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -32,9 +32,10 @@ fun PopupBannerOptionButton(bannerId: String, closeType: BannerCloseType) {
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .clickable {
-                    BannerManager.dismissAndPresentPopup(
+                    BannerManager.saveLocalBannerPolicy(
                         id = bannerId,
                         notShowedDate = closeType.notShowedDate)
+                    dismiss()
                 }
                 .padding(horizontal = 10.dp, vertical = 20.dp)
                 .padding(end = 10.dp)
@@ -47,7 +48,7 @@ fun PopupBannerOptionButton(bannerId: String, closeType: BannerCloseType) {
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .clickable {
-                    BannerManager.dismissAndPresentPopup()
+                    dismiss()
                 }
                 .padding(horizontal = 10.dp, vertical = 20.dp)
                 .padding(start = 10.dp)

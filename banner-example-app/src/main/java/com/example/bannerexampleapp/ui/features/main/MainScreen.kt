@@ -19,12 +19,13 @@ import kotlinx.coroutines.launch
 fun MainScreen() {
     val context = LocalContext.current
     val scaffoldState = rememberScaffoldState()
+
     Scaffold(
         scaffoldState = scaffoldState
     ) { paddingValues ->
 
         LaunchedEffect(key1 = Unit, block = {
-            BannerManager.startPopupBanner()
+            BannerManager.startPopupBanner(context)
 
             this.launch {
                 BannerManager.landingType.collect {
@@ -38,7 +39,7 @@ fun MainScreen() {
             }
         })
 
-        PopupBannerView()
+//        PopupBannerView()
 
         Column(
             modifier = Modifier.padding(

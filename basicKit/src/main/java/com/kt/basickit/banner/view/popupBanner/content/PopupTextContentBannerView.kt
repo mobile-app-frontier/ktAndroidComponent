@@ -18,7 +18,7 @@ internal fun PopupTextContentBannerView(content: PopupBannerPolicyItem.Content.T
         fontSize = 16.sp,
         modifier = Modifier
             .padding(horizontal = 10.dp)
-            .padding(bottom = 20.dp)
+            .padding(vertical = 20.dp)
             .fillMaxWidth()
     )
 }

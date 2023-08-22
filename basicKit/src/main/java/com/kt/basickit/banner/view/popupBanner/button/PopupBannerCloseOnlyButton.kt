@@ -18,7 +18,7 @@ import com.kt.basickit.banner.BannerManager
 import com.kt.basickit.banner.domain.entity.BannerCloseType
 
 @Composable
-internal fun PopupBannerCloseOnlyButton(bannerId: String) {
+internal fun PopupBannerCloseOnlyButton(dismiss: () -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.End,
@@ -32,9 +32,7 @@ internal fun PopupBannerCloseOnlyButton(bannerId: String) {
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .clickable {
-                    BannerManager.dismissAndPresentPopup(
-                        id = bannerId,
-                        notShowedDate = BannerCloseType.CloseOnly.notShowedDate)
+                    dismiss()
                 }
                 .padding(horizontal = 10.dp, vertical = 20.dp)
                 .padding(start = 10.dp)

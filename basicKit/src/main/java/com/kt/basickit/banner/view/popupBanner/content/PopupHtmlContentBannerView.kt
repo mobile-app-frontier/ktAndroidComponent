@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,7 +21,11 @@ import com.kt.basickit.banner.domain.entity.BannerLandingType
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicyItem
 
 @Composable
-fun PopupHtmlContentBannerView(content: PopupBannerPolicyItem.Content.Html, landingType: BannerLandingType) {
+fun PopupHtmlContentBannerView(
+    content: PopupBannerPolicyItem.Content.Html,
+    landingType: BannerLandingType,
+    dismiss: () -> Unit
+) {
     // Get local density from composable
     val localDensity = LocalDensity.current
 
@@ -32,6 +37,7 @@ fun PopupHtmlContentBannerView(content: PopupBannerPolicyItem.Content.Html, land
     Box {
         AndroidView(
             modifier = Modifier
+                .padding(10.dp)
                 .onGloballyPositioned { coordinates ->
                     // Set column height using the LayoutCoordinates
                     htmlHeightDp = with(localDensity) { coordinates.size.height.toDp() }
@@ -45,9 +51,9 @@ fun PopupHtmlContentBannerView(content: PopupBannerPolicyItem.Content.Html, land
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(htmlHeightDp)
+                .height(htmlHeightDp + 20.dp)
                 .clickable(enabled = landingType !is BannerLandingType.None) {
-                    BannerManager.sendToLandingType(landingType = landingType)
+                    BannerManager.sendToLandingType(landingType = landingType, dismiss = dismiss)
                 }
         ) {}
     }
