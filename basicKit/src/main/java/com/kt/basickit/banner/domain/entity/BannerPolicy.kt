@@ -7,6 +7,12 @@ public data class BannerPolicy(
     val popupBanner: PopupBannerPolicy
 ) {
     companion object {
+        public fun create(): BannerPolicy {
+            return BannerPolicy(
+                defaultBanner = mapOf(),
+                popupBanner = PopupBannerPolicy()
+            )
+        }
         public fun fromModel(model: List<BannerPolicyItemModel>): BannerPolicy {
             return BannerPolicy(
                 defaultBanner = model.toDefaultBannerPolicy(),

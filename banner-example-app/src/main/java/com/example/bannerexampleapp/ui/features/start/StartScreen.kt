@@ -44,7 +44,6 @@ fun StartScreen(
                 navController.navigate(route = AppNavigationRoute.ROOT) {
                     // Banner Manager initialize
                     BannerManager.initialize(
-                        scope = CoroutineScope(Dispatchers.IO),
                         localBannerPolicySetter = { localBannerPolicy ->
                             screenViewModel.saveLocalBannerPolicy(localBannerPolicy)
                         },

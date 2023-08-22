@@ -94,7 +94,7 @@ class BannerPolicyDataSourceImpl @Inject constructor(): DataSource, BannerPolicy
                     "landingType": "web",
                     "landingDestination": "https://docs.swift.org/",
                     "closeType": "today",
-                    "type": "popup"
+                    "type": "popup"2
                 },
                 {
                     "id": "9",

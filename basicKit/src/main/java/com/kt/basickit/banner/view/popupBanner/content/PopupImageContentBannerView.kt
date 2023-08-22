@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.kt.basickit.banner.BannerManager
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicyItem
 
 @Composable
@@ -22,6 +23,6 @@ fun PopupImageContentBannerView(content: PopupBannerPolicyItem.Content.Image) {
             .build(),
         contentDescription = null,
         contentScale =  if (isPortrait) ContentScale.FillWidth else ContentScale.FillHeight,
-        modifier = if (isPortrait) Modifier.fillMaxWidth() else Modifier
+        modifier = if (isPortrait) Modifier.fillMaxWidth() else Modifier,
     )
 }

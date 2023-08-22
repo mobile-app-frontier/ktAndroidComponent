@@ -16,7 +16,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import java.lang.Error
 import java.util.Calendar
 import java.util.Date
 
@@ -49,7 +48,7 @@ public class BannerPolicyBloc(
                     localBanner = localBannerPolicy
                 )
                 handleBannerPolicy(remoteBanner = remoteBannerPolicy, localBanner = localBannerPolicy)
-            } catch (e: Error) {
+            } catch (e: Throwable) {
                 mutableState.value = BannerPolicyState.Fail(error = e)
             }
         }
@@ -124,7 +123,6 @@ public class BannerPolicyBloc(
 
             // or resolve display size if your images are full screen
             // .size(DisplaySizeResolver(context))
-
             .build()
         context.imageLoader.enqueue(request)
     }

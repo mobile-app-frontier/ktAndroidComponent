@@ -44,6 +44,7 @@ fun MainScreen() {
             modifier = Modifier.padding(
                 paddingValues = paddingValues
             )
+                .padding(10.dp)
         ) {
             Text("Default Banner View")
 

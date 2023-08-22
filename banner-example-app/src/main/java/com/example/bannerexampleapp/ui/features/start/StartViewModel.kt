@@ -10,6 +10,7 @@ import com.example.bannerexampleapp.domain.usecase.BannerPolicyUseCase
 import com.kt.basickit.banner.LocalBannerPolicy
 import com.kt.basickit.banner.bloc.BannerPolicyBloc
 import com.kt.basickit.banner.bloc.BannerPolicyState
+import com.kt.basickit.banner.domain.entity.BannerPolicy
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -38,8 +39,12 @@ class StartViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             bannerPolicyBloc.state.collect {
-                if (it is BannerPolicyState.Success) {
-                    updateState { StartState.Success(it.willShowBanner) }
+                when (it) {
+                    is BannerPolicyState.Success -> updateState { StartState.Success(it.willShowBanner) }
+                    is BannerPolicyState.Fail -> updateState { StartState.Success(BannerPolicy.create()) }
+                    else -> {
+                        // do nothing
+                    }
                 }
             }
         }

@@ -8,6 +8,7 @@ import com.kt.basickit.banner.domain.entity.PopupBannerPolicy
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicyItem
 import com.kt.basickit.banner.view.defaultBanner.DefaultBannerView
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -21,13 +22,14 @@ import java.util.Date
 
 public object BannerManager {
     private var isInitialized = false
-    private var isStarted = false // Android 의 경우, 화면을 회전할 경우 Activity 가 재시작 되므로 LaunchedEffect 를 사용 하더 라도 function 이
-    // 여러번 호출됨. 따라서 Singleton 인 BannerManager 에서 이를 직접 관리함.
+//    private var isStarted = false // Android 의 경우, 화면을 회전할 경우 Activity 가 재시작 되므로 LaunchedEffect 를 사용 하더 라도 function 이
+                                    // 여러번 호출됨. 따라서 Singleton 인 BannerManager 에서 이를 직접 관리함.
+                                    // -> 가로 모드 UI 제공이 쉽지 않아 가로 모드는 제공 하지 않음. 따라서 현재 사용 하지 않음.
 
     private var bannerPolicy: BannerPolicy? = null
 
     // Coroutine
-    private var scope: CoroutineScope? = null
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
 
     // Local Banner Policy
     private var localBannerPolicyGetter: (suspend () -> LocalBannerPolicy)? = null
@@ -48,7 +50,7 @@ public object BannerManager {
         get() = mutableLandingType.asSharedFlow()
 
     internal fun sendToLandingType(landingType: BannerLandingType) {
-        scope?.launch {
+        scope.launch {
             mutableLandingType.emit(landingType)
 
             if (landingType is BannerLandingType.InApp) {
@@ -60,19 +62,13 @@ public object BannerManager {
 
     // 여러 번 호출 될 수 있음. BannerManager 는 Singleton 이므로 App lifecycle 동안 여러번 fetch 될 수 있기 때문에
     public fun initialize(
-        scope: CoroutineScope,
         bannerPolicy: BannerPolicy?,
         localBannerPolicyGetter: suspend () -> LocalBannerPolicy,
         localBannerPolicySetter: suspend (LocalBannerPolicy) -> Unit
     ) {
-//        if (isInitialized) {
-//            return
-//        }
-
         isInitialized = true
-        isStarted = false
+//        isStarted = false
 
-        this.scope = scope
         this.bannerPolicy = bannerPolicy
 
         this.localBannerPolicyGetter = localBannerPolicyGetter
@@ -91,12 +87,12 @@ public object BannerManager {
     }
 
     public fun startPopupBanner() {
-        if (!isInitialized || isStarted) { return }
+        if (!isInitialized) { return } //|| isStarted) { return }
 
-        isStarted = true
+//        isStarted = true
 
         bannerPolicy?.let { bannerPolicy ->
-            scope?.launch {
+            scope.launch {
                 async { localBannerPolicyGetter?.let { it() } }.await()?.let { localBannerPolicy.putAll(it) }
             }
 
@@ -121,7 +117,7 @@ public object BannerManager {
         }
         mutablePopupBanner.value = null
 
-        scope?.launch {
+        scope.launch {
             delay(100)
             presentPopup()
         }
@@ -132,11 +128,10 @@ public object BannerManager {
     }
 
     private fun saveLocalBannerPolicy(id: String, notShowedDate: Date) {
-        scope?.launch {
+        scope.launch {
             localBannerPolicy[id] = notShowedDate.time.toString()
 
             localBannerPolicySetter?.let { it(localBannerPolicy) }
         }
     }
-
 }
