@@ -33,6 +33,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.kt.basickit.banner.BannerManager
+import com.kt.basickit.banner.domain.entity.BannerLandingType
 import com.kt.basickit.banner.domain.entity.DefaultBannerPolicyItem
 
 @OptIn(ExperimentalPagerApi::class)
@@ -55,7 +56,7 @@ internal fun DefaultBannerView(banners: List<DefaultBannerPolicyItem>, modifier:
                     contentScale = ContentScale.FillWidth,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable {
+                        .clickable(enabled = banners[index].landingType !is BannerLandingType.None) {
                             BannerManager.sendToLandingType(banners[index].landingType)
                         }
                 )
