@@ -8,8 +8,8 @@ import com.example.bannerexampleapp.core.datastore.PreferenceDataStore
 import com.example.bannerexampleapp.core.logger.Logger
 import com.example.bannerexampleapp.domain.usecase.BannerPolicyUseCase
 import com.kt.basickit.banner.LocalBannerPolicy
-import com.kt.basickit.banner.bloc.BannerPolicyFetcher
-import com.kt.basickit.banner.bloc.BannerPolicyState
+import com.kt.basickit.banner.fetcher.BannerPolicyFetcher
+import com.kt.basickit.banner.fetcher.BannerPolicyState
 import com.kt.basickit.banner.domain.entity.BannerPolicy
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi

@@ -1,4 +1,4 @@
-package com.kt.basickit.banner.bloc
+package com.kt.basickit.banner.fetcher
 
 import android.content.Context
 import coil.imageLoader
