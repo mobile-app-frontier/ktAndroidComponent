@@ -2,7 +2,6 @@ package com.kt.basickit.banner.view.popupBanner.button
 
 import androidx.compose.runtime.Composable
 import com.kt.basickit.banner.domain.entity.BannerCloseType
-import com.kt.basickit.banner.view.option.TextStyleOption
 
 @Composable
 internal fun PopupBannerButton(

@@ -12,8 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.kt.basickit.banner.BannerManager
-import com.kt.basickit.banner.view.option.TextStyleOption
-import com.kt.basickit.banner.view.popupBanner.PopupBannerView
 import kotlinx.coroutines.launch
 
 @Composable

@@ -1,31 +1,24 @@
 package com.kt.basickit.banner
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.fragment.app.DialogFragment
+import androidx.compose.ui.text.TextStyle
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import com.kt.basickit.R
 import com.kt.basickit.banner.domain.entity.BannerLandingType
 import com.kt.basickit.banner.domain.entity.BannerPolicy
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicy
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicyItem
 import com.kt.basickit.banner.exception.BannerPolicyException
 import com.kt.basickit.banner.view.defaultBanner.DefaultBannerView
-import com.kt.basickit.banner.view.option.TextStyleOption
+import com.kt.basickit.banner.view.option.defaultButtonTextStyle
 import com.kt.basickit.banner.view.popupBanner.PopupBannerFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.Date
 
@@ -49,7 +42,7 @@ public object BannerManager {
     // Popup
     // 보여줄 Popup Banner Policy. 이미 보여준 배너는 들어 있지 않음.
     private var willShowPopupBannerPolicy = PopupBannerPolicy()
-    var buttonTextStyleOption: TextStyleOption = TextStyleOption.defaultButtonTextStyle()
+    var buttonTextStyle: TextStyle = TextStyle.defaultButtonTextStyle()
 
     // Landing
     private val mutableLandingType = MutableSharedFlow<BannerLandingType>()
@@ -94,15 +87,15 @@ public object BannerManager {
         return DefaultBannerView(banners = defaultBanners, modifier = modifier)
     }
 
-    public fun startPopupBanner(context: Context, buttonTextStyleOption: TextStyleOption? = null) {
+    public fun startPopupBanner(context: Context, buttonTextStyle: TextStyle? = null) {
         if (!isInitialized) { throw BannerPolicyException.InvalidState("Failed BannerFetcher") }
 
         if (isStarted) { return }
 
         isStarted = true
 
-        buttonTextStyleOption?.let {
-            this.buttonTextStyleOption = it
+        buttonTextStyle?.let {
+            this.buttonTextStyle = it
         }
 
         bannerPolicy?.let { bannerPolicy ->
