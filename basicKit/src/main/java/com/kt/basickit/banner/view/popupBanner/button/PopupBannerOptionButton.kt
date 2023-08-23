@@ -16,20 +16,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kt.basickit.banner.BannerManager
 import com.kt.basickit.banner.domain.entity.BannerCloseType
+import com.kt.basickit.banner.view.option.TextStyleOption
 
+// TODO: Button Text Style 받을 수 있도록 수정
 @Composable
-fun PopupBannerOptionButton(bannerId: String, closeType: BannerCloseType, dismiss: () -> Unit) {
+fun PopupBannerOptionButton(
+    bannerId: String, closeType: BannerCloseType,
+    dismiss: () -> Unit
+) {
+    val buttonTextStyleOption = BannerManager.buttonTextStyleOption
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     ) {
         Text(
             closeType.text,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.SemiBold,
-            color = Color.Gray,
-            textAlign = TextAlign.Center,
+            fontSize = buttonTextStyleOption.fontSize,
+            fontWeight = buttonTextStyleOption.fontWeight,
+            color = buttonTextStyleOption.color,
+            textAlign = buttonTextStyleOption.textAlign,
+            fontFamily = buttonTextStyleOption.fontFamily,
             modifier = Modifier
                 .clickable {
                     BannerManager.saveLocalBannerPolicy(
@@ -42,10 +50,11 @@ fun PopupBannerOptionButton(bannerId: String, closeType: BannerCloseType, dismis
         )
         Text(
             "닫기",
-            fontSize = 16.sp,
-            fontWeight = FontWeight.SemiBold,
-            color = Color.Gray,
-            textAlign = TextAlign.Center,
+            fontSize = buttonTextStyleOption.fontSize,
+            fontWeight = buttonTextStyleOption.fontWeight,
+            color = buttonTextStyleOption.color,
+            textAlign = buttonTextStyleOption.textAlign,
+            fontFamily = buttonTextStyleOption.fontFamily,
             modifier = Modifier
                 .clickable {
                     dismiss()

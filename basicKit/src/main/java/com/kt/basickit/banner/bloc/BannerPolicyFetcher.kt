@@ -3,6 +3,7 @@ package com.kt.basickit.banner.bloc
 import android.content.Context
 import coil.imageLoader
 import coil.request.ImageRequest
+import com.kt.basickit.banner.BannerManager
 import com.kt.basickit.banner.LocalBannerPolicy
 import com.kt.basickit.banner.MutableLocalBannerPolicy
 import com.kt.basickit.banner.domain.entity.BannerPolicy
@@ -18,8 +19,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.util.Calendar
 import java.util.Date
-
-public class BannerPolicyBloc(
+public class BannerPolicyFetcher(
     private val context: Context,
     private val repository: BannerPolicyRepository,
     private val localBannerPolicyGetter: suspend () -> LocalBannerPolicy,
@@ -64,11 +64,19 @@ public class BannerPolicyBloc(
         // local 정책 update
         localBannerPolicySetter(filteredPopupBanner.second)
 
+        val bannerPolicy = BannerPolicy(
+            defaultBanner = filteredDefaultBanner,
+            popupBanner = filteredPopupBanner.first
+        )
+
+        BannerManager.initialize(
+            localBannerPolicySetter = localBannerPolicySetter,
+            localBannerPolicyGetter = localBannerPolicyGetter,
+            bannerPolicy = bannerPolicy
+        )
+
         mutableState.value = BannerPolicyState.Success(
-            willShowBanner = BannerPolicy(
-                defaultBanner = filteredDefaultBanner,
-                popupBanner = filteredPopupBanner.first
-            )
+            willShowBanner = bannerPolicy
         )
     }
 

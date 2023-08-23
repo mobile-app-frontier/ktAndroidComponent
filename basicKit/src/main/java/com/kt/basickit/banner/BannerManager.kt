@@ -12,7 +12,9 @@ import com.kt.basickit.banner.domain.entity.BannerLandingType
 import com.kt.basickit.banner.domain.entity.BannerPolicy
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicy
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicyItem
+import com.kt.basickit.banner.exception.BannerPolicyException
 import com.kt.basickit.banner.view.defaultBanner.DefaultBannerView
+import com.kt.basickit.banner.view.option.TextStyleOption
 import com.kt.basickit.banner.view.popupBanner.PopupBannerFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,9 +32,8 @@ import java.util.Date
 public object BannerManager {
 
     private var isInitialized = false
-//    private var isStarted = false // Android 의 경우, 화면을 회전할 경우 Activity 가 재시작 되므로 LaunchedEffect 를 사용 하더 라도 function 이
+    private var isStarted = false // Android 의 경우, 화면을 회전할 경우 Activity 가 재시작 되므로 LaunchedEffect 를 사용 하더 라도 function 이
                                     // 여러번 호출됨. 따라서 Singleton 인 BannerManager 에서 이를 직접 관리함.
-                                    // -> 가로 모드 UI 제공이 쉽지 않아 가로 모드는 제공 하지 않음. 따라서 현재 사용 하지 않음.
 
     private var bannerPolicy: BannerPolicy? = null
 
@@ -48,7 +49,7 @@ public object BannerManager {
     // Popup
     // 보여줄 Popup Banner Policy. 이미 보여준 배너는 들어 있지 않음.
     private var willShowPopupBannerPolicy = PopupBannerPolicy()
-    private var fragmentManager: FragmentManager? = null
+    var buttonTextStyleOption: TextStyleOption = TextStyleOption.defaultButtonTextStyle()
 
     // Landing
     private val mutableLandingType = MutableSharedFlow<BannerLandingType>()
@@ -68,13 +69,13 @@ public object BannerManager {
     }
 
     // 여러 번 호출 될 수 있음. BannerManager 는 Singleton 이므로 App lifecycle 동안 여러번 fetch 될 수 있기 때문에
-    public fun initialize(
+    internal fun initialize(
         bannerPolicy: BannerPolicy?,
         localBannerPolicyGetter: suspend () -> LocalBannerPolicy,
         localBannerPolicySetter: suspend (LocalBannerPolicy) -> Unit
     ) {
         isInitialized = true
-//        isStarted = false
+        isStarted = false
 
         this.bannerPolicy = bannerPolicy
 
@@ -84,7 +85,7 @@ public object BannerManager {
 
     @Composable
     public fun DefaultBannerView(category: String, modifier: Modifier = Modifier) {
-        if (!isInitialized) { return }
+        if (!isInitialized) { throw BannerPolicyException.InvalidState("Failed BannerFetcher") }
 
         val defaultBanners = bannerPolicy?.defaultBanner?.get(category) ?: return
 
@@ -93,12 +94,16 @@ public object BannerManager {
         return DefaultBannerView(banners = defaultBanners, modifier = modifier)
     }
 
-    public fun startPopupBanner(context: Context) {
-        if (!isInitialized) { return } //|| isStarted) { return }
+    public fun startPopupBanner(context: Context, buttonTextStyleOption: TextStyleOption? = null) {
+        if (!isInitialized) { throw BannerPolicyException.InvalidState("Failed BannerFetcher") }
 
-        val activity = context as? FragmentActivity ?: return
-        fragmentManager = activity.supportFragmentManager
-//        isStarted = true
+        if (isStarted) { return }
+
+        isStarted = true
+
+        buttonTextStyleOption?.let {
+            this.buttonTextStyleOption = it
+        }
 
         bannerPolicy?.let { bannerPolicy ->
             scope.launch {
@@ -106,20 +111,30 @@ public object BannerManager {
             }
 
             willShowPopupBannerPolicy = bannerPolicy.popupBanner
-            presentPopup()
+            presentPopup(context = context)
         }
     }
 
     // 보여줄 popup banner 중 높은 우선 순위의 popup banner 을 present 함.
-    internal fun presentPopup() {
+    internal fun presentPopup(context: Context) {
+        val activity = context as? FragmentActivity ?: throw BannerPolicyException.FailToStartPopup(
+            "Only FragmentActivity Can Use BannerManager"
+        )
+        val fragmentManager = activity.supportFragmentManager
+
         if (willShowPopupBannerPolicy.isNotEmpty()) {
-            willShowPopupBannerPolicy.poll()?.let { popupBanner ->
-               fragmentManager?.let {
-                    val fragment = PopupBannerFragment(banner = popupBanner)
-                    fragment.show(it, fragment.tag)
-                }
+           fragmentManager.let {
+                val fragment = PopupBannerFragment()
+                fragment.show(it, fragment.tag)
             }
         }
+    }
+
+    internal fun getBanner(): PopupBannerPolicyItem {
+        willShowPopupBannerPolicy.poll()?.let { popupBanner ->
+            return popupBanner
+        }
+        throw BannerPolicyException.InvalidState("WillShowPopupBannerPolicy is Empty")
     }
 
     internal fun saveLocalBannerPolicy(id: String, notShowedDate: Date) {

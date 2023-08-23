@@ -42,17 +42,6 @@ fun StartScreen(
 
             is StartState.Success -> {
                 navController.navigate(route = AppNavigationRoute.ROOT) {
-                    // Banner Manager initialize
-                    BannerManager.initialize(
-                        localBannerPolicySetter = { localBannerPolicy ->
-                            screenViewModel.saveLocalBannerPolicy(localBannerPolicy)
-                        },
-                        localBannerPolicyGetter = {
-                            return@initialize screenViewModel.readLocalBannerPolicy()
-                        },
-                        bannerPolicy = state.bannerPolicy
-                    )
-
                     navController.popBackStack()
                     it.graph.setStartDestination(AppNavigationRoute.ROOT.routeName)
                 }

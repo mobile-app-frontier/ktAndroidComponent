@@ -16,9 +16,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kt.basickit.banner.BannerManager
 import com.kt.basickit.banner.domain.entity.BannerCloseType
+import com.kt.basickit.banner.view.option.TextStyleOption
 
 @Composable
-internal fun PopupBannerCloseOnlyButton(dismiss: () -> Unit) {
+internal fun PopupBannerCloseOnlyButton(
+    dismiss: () -> Unit,
+) {
+    val buttonTextStyleOption = BannerManager.buttonTextStyleOption
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.End,
@@ -26,10 +31,11 @@ internal fun PopupBannerCloseOnlyButton(dismiss: () -> Unit) {
     ) {
         Text(
             "닫기",
-            fontSize = 16.sp,
-            fontWeight = FontWeight.SemiBold,
-            color = Color.Gray,
-            textAlign = TextAlign.Center,
+            fontSize = buttonTextStyleOption.fontSize,
+            fontWeight = buttonTextStyleOption.fontWeight,
+            color = buttonTextStyleOption.color,
+            textAlign = buttonTextStyleOption.textAlign,
+            fontFamily = buttonTextStyleOption.fontFamily,
             modifier = Modifier
                 .clickable {
                     dismiss()

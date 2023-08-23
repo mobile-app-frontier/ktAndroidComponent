@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kt.basickit.R
 import com.kt.basickit.banner.BannerManager
@@ -15,11 +13,11 @@ import com.kt.basickit.banner.domain.entity.BannerCloseType
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicyItem
 import com.kt.basickit.databinding.BottomSheetBinding
 
-internal class PopupBannerFragment(private val banner: PopupBannerPolicyItem) : BottomSheetDialogFragment() {
-
+internal class PopupBannerFragment() : BottomSheetDialogFragment() {
+    lateinit var banner: PopupBannerPolicyItem
     override fun onDetach() {
         super.onDetach()
-        BannerManager.presentPopup()
+        context?.let { BannerManager.presentPopup(context = it) }
     }
 
     override fun dismiss() {
@@ -36,7 +34,9 @@ internal class PopupBannerFragment(private val banner: PopupBannerPolicyItem) : 
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = DataBindingUtil.inflate<BottomSheetBinding>(
+        banner = BannerManager.getBanner()
+
+        return DataBindingUtil.inflate<BottomSheetBinding>(
             inflater,
             R.layout.bottom_sheet,
             container,
@@ -48,8 +48,6 @@ internal class PopupBannerFragment(private val banner: PopupBannerPolicyItem) : 
             bottomSheetContentView.setContent {
                 PopupBannerView(banner = banner, dismiss = { dismiss() } )
             }
-        }
-
-        return binding.root
+        }.root
     }
 }
