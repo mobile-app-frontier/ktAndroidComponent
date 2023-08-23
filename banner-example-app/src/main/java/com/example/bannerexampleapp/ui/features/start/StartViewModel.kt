@@ -8,8 +8,8 @@ import com.example.bannerexampleapp.core.datastore.PreferenceDataStore
 import com.example.bannerexampleapp.core.logger.Logger
 import com.example.bannerexampleapp.domain.usecase.BannerPolicyUseCase
 import com.kt.basickit.banner.LocalBannerPolicy
-import com.kt.basickit.banner.bloc.BannerPolicyBloc
-import com.kt.basickit.banner.bloc.BannerPolicyState
+import com.kt.basickit.banner.fetcher.BannerPolicyFetcher
+import com.kt.basickit.banner.fetcher.BannerPolicyState
 import com.kt.basickit.banner.domain.entity.BannerPolicy
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
@@ -28,17 +28,17 @@ class StartViewModel @Inject constructor(
     private val preferenceDataStore: PreferenceDataStore,
     private val useCase: BannerPolicyUseCase
 ) : StateViewModel<StartState>(initialState = StartState.Loading) {
-    private val bannerPolicyBloc = BannerPolicyBloc(
+    private val bannerPolicyFetcher = BannerPolicyFetcher(
         context = application.applicationContext,
         repository = useCase,
-        localBannerPolicyGetter = { return@BannerPolicyBloc readLocalBannerPolicy() },
+        localBannerPolicyGetter = { return@BannerPolicyFetcher readLocalBannerPolicy() },
         localBannerPolicySetter = { saveLocalBannerPolicy(localBannerPolicy = it) },
         appVersion = BuildConfig.VERSION_NAME,
     )
 
     init {
         viewModelScope.launch {
-            bannerPolicyBloc.state.collect {
+            bannerPolicyFetcher.state.collect {
                 when (it) {
                     is BannerPolicyState.Success -> updateState { StartState.Success(it.willShowBanner) }
                     is BannerPolicyState.Fail -> updateState { StartState.Success(BannerPolicy.create()) }
@@ -55,7 +55,7 @@ class StartViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                bannerPolicyBloc.fetch()
+                bannerPolicyFetcher.fetch()
             } catch (e: Exception) {
                 Logger.e("fetching error: ${e.message}")
                 updateState { StartState.FailToInitialize }

@@ -9,45 +9,41 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.kt.basickit.banner.BannerManager
 import com.kt.basickit.banner.domain.entity.BannerCloseType
 
 @Composable
-fun PopupBannerOptionButton(bannerId: String, closeType: BannerCloseType) {
+fun PopupBannerOptionButton(
+    bannerId: String, closeType: BannerCloseType,
+    dismiss: () -> Unit
+) {
+    val buttonTextStyle = BannerManager.buttonTextStyle
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     ) {
         Text(
             closeType.text,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.SemiBold,
-            color = Color.Gray,
-            textAlign = TextAlign.Center,
+            style = buttonTextStyle,
             modifier = Modifier
                 .clickable {
-                    BannerManager.dismissAndPresentPopup(
+                    BannerManager.saveLocalBannerPolicy(
                         id = bannerId,
                         notShowedDate = closeType.notShowedDate)
+                    dismiss()
                 }
                 .padding(horizontal = 10.dp, vertical = 20.dp)
                 .padding(end = 10.dp)
         )
         Text(
             "닫기",
-            fontSize = 16.sp,
-            fontWeight = FontWeight.SemiBold,
-            color = Color.Gray,
-            textAlign = TextAlign.Center,
+            style = buttonTextStyle,
             modifier = Modifier
                 .clickable {
-                    BannerManager.dismissAndPresentPopup()
+                    dismiss()
                 }
                 .padding(horizontal = 10.dp, vertical = 20.dp)
                 .padding(start = 10.dp)

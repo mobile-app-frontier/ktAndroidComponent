@@ -12,20 +12,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.kt.basickit.banner.BannerManager
-import com.kt.basickit.banner.view.popupBanner.PopupBannerView
 import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen() {
     val context = LocalContext.current
     val scaffoldState = rememberScaffoldState()
+
     Scaffold(
         scaffoldState = scaffoldState
     ) { paddingValues ->
 
         LaunchedEffect(key1 = Unit, block = {
-            BannerManager.startPopupBanner()
-
             this.launch {
                 BannerManager.landingType.collect {
                     // TODO: Landing
@@ -36,9 +34,9 @@ fun MainScreen() {
                     ).show()
                 }
             }
-        })
 
-        PopupBannerView()
+            BannerManager.startPopupBanner(context)
+        })
 
         Column(
             modifier = Modifier.padding(
