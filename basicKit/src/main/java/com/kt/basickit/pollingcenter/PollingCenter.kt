@@ -1,84 +1,92 @@
 package com.kt.basickit.pollingcenter
 
-import android.app.Application
+import android.os.Handler
+import android.os.HandlerThread
 import android.util.Log
+import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.runBlocking
-import java.util.Timer
-import kotlin.concurrent.timerTask
-
-typealias OnPolling = suspend () -> Unit
+private data class RunnableWorkableItem constructor(val workableItem: WorkableItem, val runnable: Runnable)
 
 object PollingCenter {
 
-    private const val TIMER_INTERVAL = 5000
-    private var timer: Timer? = null
-    val workItems: MutableList<WorkItem> = mutableListOf()
+    private const val TAG = "PollingCenter"
+    private const val HANDLER_NAME = "Custom handler thread"
+    private var backgroundHandler: Handler? = null
 
-    fun init(application: Application) {
-        Log.d("polling center", "new polling center created")
-        PollingController.init(application)
+    enum class PollingType {
+        Instant,
+        Delayed,
     }
 
-    fun addWorkItem(item: WorkItem) {
-        Log.d("polling center", "added $item!")
-        if (workItems.checkDuplicate(item)) {
-            Log.d("polling center", "added skipped cause already exists!")
-            return
-        }
-        workItems.add(item)
-        invokeWorkItems()
-        if (item is ImmediateWorkItem) {
-            runBlocking {
-                item.functions.forEach {
-                    it()
+    private val runnableMap = mutableMapOf<String, RunnableWorkableItem>()
+
+    fun setPollingCenter() {
+        val thread = HandlerThread(HANDLER_NAME)
+        thread.start()
+        backgroundHandler = Handler(thread.looper)
+    }
+
+    fun addTask(workable: WorkableItem) {
+        if(runnableMap.containsKey(workable.key)) return
+        val task = makePollingRunnable(workable.onPolling, workable.interval!!)
+        runnableMap[workable.key] = RunnableWorkableItem(workable, task)
+        postTask(task, workable)
+    }
+
+    private fun makePollingRunnable(onPolling: OnPolling, interval: Long) : Runnable {
+        return object: Runnable {
+            override fun run() {
+                runBlocking {
+                    onPolling.invoke()
                 }
+                backgroundHandler?.postDelayed(this, interval)
             }
         }
     }
 
-    private fun MutableList<WorkItem>.checkDuplicate(item: WorkItem): Boolean {
-        return this.any { it::class == item::class }
-    }
-
-    private fun invokeWorkItems() {
-        timer?.let {
-            return
-        }
-        startTimer()
-    }
-
-    private fun startTimer() {
-        cancelTimer()
-        timer = Timer()
-        val task = timerTask {
-            runBlocking {
-                runPolling()
+    private fun postTask(task: Runnable, workable: WorkableItem) {
+        when(workable.pollingType) {
+            PollingType.Instant -> {
+                backgroundHandler?.post(task)
             }
-        }
-        timer?.scheduleAtFixedRate(task, TIMER_INTERVAL.toLong(), TIMER_INTERVAL.toLong())
-    }
-
-    fun cancelTimer() {
-        Log.d("polling center", "if timer exists, canceled!")
-        timer?.cancel()
-        timer = null
-    }
-
-    fun resumeTimer() {
-        Log.d("polling center", "timer resumed!")
-        startTimer()
-    }
-
-    private suspend fun runPolling() {
-        Log.d("polling center", "called run!")
-        workItems.forEach {
-            it.functions.forEach {
-                it()
+            PollingType.Delayed -> {
+                backgroundHandler?.postDelayed(task, workable.interval!!)
             }
         }
     }
 
-    inline fun <reified T> removeWorkItem() {
-        workItems.filter { it is T }.forEach { item -> workItems.remove(item) }
+    fun cancel() {
+        backgroundHandler?.looper?.quitSafely()
+        backgroundHandler = null
+    }
+
+    fun resume() {
+        if(backgroundHandler == null) {
+            setPollingCenter()
+            runnableMap.forEach { pollingItem ->
+                postTask(pollingItem.value.runnable, pollingItem.value.workableItem)
+            }
+        } else{
+            Log.d(TAG, "handler is already working")
+        }
+    }
+
+    /**
+     * 작업 키를 넣어 폴링 큐에서 삭제
+     */
+    fun removeTask(key: String) {
+        if(runnableMap.containsKey(key)) {
+            val task = runnableMap[key]!!
+            backgroundHandler?.removeCallbacks(task.runnable)
+            runnableMap.remove(key)
+        }
+    }
+
+    /**
+     * main destroy 시 호출할 것
+     */
+    fun destroy() {
+        Log.d(TAG, "destroyed")
+        backgroundHandler?.looper?.quitSafely()
     }
 }
