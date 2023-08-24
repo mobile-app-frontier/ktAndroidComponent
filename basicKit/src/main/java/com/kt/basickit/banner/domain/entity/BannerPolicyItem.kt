@@ -1,6 +1,8 @@
 package com.kt.basickit.banner.domain.entity
 
+import android.os.Parcelable
 import com.kt.basickit.util.Version
+import kotlinx.parcelize.Parcelize
 import java.util.Calendar
 import java.util.Date
 
@@ -56,7 +58,8 @@ public enum class BannerCloseType {
     }
 }
 
-public sealed class BannerLandingType {
+@Parcelize
+public sealed class BannerLandingType : Parcelable {
     public object None: BannerLandingType()
     public data class Web(val url: String): BannerLandingType()
     public data class InApp(val destination: String): BannerLandingType()

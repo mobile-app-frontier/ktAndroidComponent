@@ -1,8 +1,11 @@
 package com.kt.basickit.banner.domain.entity
 
+import android.os.Parcelable
 import com.kt.basickit.banner.data.model.BannerPolicyItemModel
 import com.kt.basickit.util.Version
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 public data class PopupBannerPolicyItem(
     public override val id: String,
     public override val priority: Int,
@@ -12,7 +15,7 @@ public data class PopupBannerPolicyItem(
 
     public val content: Content,
     public val closeType: BannerCloseType
-) : Comparable<PopupBannerPolicyItem>, BannerPolicyItem {
+) : Comparable<PopupBannerPolicyItem>, BannerPolicyItem, Parcelable {
     companion object {
         fun fromModel(model: BannerPolicyItemModel): PopupBannerPolicyItem {
             return PopupBannerPolicyItem(
@@ -27,7 +30,8 @@ public data class PopupBannerPolicyItem(
         }
     }
 
-    public sealed class Content {
+    @Parcelize
+    public sealed class Content : Parcelable {
         data class Text(val text: String) : Content()
 
         data class Html(val html: String) : Content()

@@ -1,11 +1,15 @@
 package com.kt.basickit.util
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 public data class Version(
     val major: Int,
     val minor: Int,
     val patch: Int,
     val preRelease: String?
-) : Comparable<Version> {
+) : Comparable<Version>, Parcelable {
     companion object {
         fun createVersion(versionName: String) : Version {
             val splitParts = versionName.split("-")
