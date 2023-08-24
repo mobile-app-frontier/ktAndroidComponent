@@ -1,6 +1,7 @@
 package com.kt.basickit.banner
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -117,8 +118,12 @@ public object BannerManager {
 
         if (willShowPopupBannerPolicy.isNotEmpty()) {
            fragmentManager.let {
-                val fragment = PopupBannerFragment()
-                fragment.show(it, fragment.tag)
+               val fragment = PopupBannerFragment()
+               try {
+                   fragment.show(it, fragment.tag)
+               } catch (e: Throwable) {
+                   return
+               }
             }
         }
     }

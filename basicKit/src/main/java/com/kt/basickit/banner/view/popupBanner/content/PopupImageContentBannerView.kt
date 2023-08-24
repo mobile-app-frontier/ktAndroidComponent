@@ -2,6 +2,7 @@ package com.kt.basickit.banner.view.popupBanner.content
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -25,14 +26,9 @@ fun PopupImageContentBannerView(modifier: Modifier = Modifier, content: PopupBan
             .data(content.url)
             .build(),
         contentDescription = null,
-        contentScale =  if (isPortrait) ContentScale.FillWidth else ContentScale.FillHeight,
-        modifier = if (isPortrait) {
-            modifier
-                .fillMaxWidth()
-
-        }
-        else {
-            modifier
-        },
+        contentScale =  if (isPortrait) ContentScale.FillWidth else ContentScale.Crop,
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(max = configuration.screenHeightDp.dp - 150.dp),
     )
 }
