@@ -55,19 +55,14 @@ object PollingCenter {
         }
     }
 
-    fun cancel() {
-        backgroundHandler?.looper?.quitSafely()
-        backgroundHandler = null
-    }
-
     fun resume() {
-        if(backgroundHandler == null) {
-            setPollingCenter()
-            runnableMap.forEach { pollingItem ->
-                postTask(pollingItem.value.runnable, pollingItem.value.workableItem)
-            }
-        } else{
-            Log.d(TAG, "handler is already working")
+        val isThreadAlive = backgroundHandler?.looper?.thread?.isAlive ?: false
+        if(isThreadAlive) {
+            cancel()
+        }
+        setPollingCenter()
+        runnableMap.forEach { pollingItem ->
+            postTask(pollingItem.value.runnable, pollingItem.value.workableItem)
         }
     }
 
@@ -75,11 +70,16 @@ object PollingCenter {
      * 작업 키를 넣어 폴링 큐에서 삭제
      */
     fun removeTask(key: String) {
-        if(runnableMap.containsKey(key)) {
+        if (runnableMap.containsKey(key)) {
             val task = runnableMap[key]!!
             backgroundHandler?.removeCallbacks(task.runnable)
             runnableMap.remove(key)
         }
+    }
+
+    private fun cancel() {
+        backgroundHandler?.looper?.quitSafely()
+        backgroundHandler = null
     }
 
     /**
@@ -88,5 +88,6 @@ object PollingCenter {
     fun destroy() {
         Log.d(TAG, "destroyed")
         backgroundHandler?.looper?.quitSafely()
+        backgroundHandler = null
     }
 }
