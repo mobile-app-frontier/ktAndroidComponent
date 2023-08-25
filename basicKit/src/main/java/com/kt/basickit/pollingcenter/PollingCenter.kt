@@ -3,7 +3,10 @@ package com.kt.basickit.pollingcenter
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Runnable
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -57,7 +60,7 @@ object PollingCenter {
     private fun makePollingRunnable(onPolling: OnPolling, interval: Long): Runnable {
         return object : Runnable {
             override fun run() {
-                runBlocking {
+                CoroutineScope(Dispatchers.Default).launch {
                     onPolling.invoke()
                 }
                 backgroundHandler?.postDelayed(this, interval)
