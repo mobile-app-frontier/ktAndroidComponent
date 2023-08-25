@@ -1,16 +1,18 @@
 package com.kt.basickit.banner
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.kt.basickit.banner.domain.entity.BannerLandingType
 import com.kt.basickit.banner.domain.entity.BannerPolicy
+import com.kt.basickit.banner.domain.entity.DefaultBannerPolicyItem
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicy
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicyItem
 import com.kt.basickit.banner.exception.BannerPolicyException
+import com.kt.basickit.banner.view.defaultBanner.DefaultBannerFragment
 import com.kt.basickit.banner.view.defaultBanner.DefaultBannerView
 import com.kt.basickit.banner.view.option.defaultButtonTextStyle
 import com.kt.basickit.banner.view.popupBanner.PopupBannerFragment
@@ -88,6 +90,12 @@ public object BannerManager {
         return DefaultBannerView(banners = defaultBanners, modifier = modifier)
     }
 
+    public fun getDefaultBannerFragment(category: String): Fragment {
+        if (!isInitialized) { throw BannerPolicyException.InvalidState("Failed BannerFetcher") }
+
+        return DefaultBannerFragment(category)
+    }
+
     public fun startPopupBanner(context: Context, buttonTextStyle: TextStyle? = null) {
         if (!isInitialized) { throw BannerPolicyException.InvalidState("Failed BannerFetcher") }
 
@@ -109,6 +117,10 @@ public object BannerManager {
         }
     }
 
+    internal fun getDefaultBanners(category: String): List<DefaultBannerPolicyItem> {
+        return bannerPolicy?.defaultBanner?.get(category) ?: listOf()
+    }
+
     // 보여줄 popup banner 중 높은 우선 순위의 popup banner 을 present 함.
     internal fun presentPopup(context: Context) {
         val activity = context as? FragmentActivity ?: throw BannerPolicyException.FailToStartPopup(
@@ -122,6 +134,9 @@ public object BannerManager {
                try {
                    fragment.show(it, fragment.tag)
                } catch (e: Throwable) {
+                   // 화면 회전시 Activity 가 소멸 하므로, 화면 회전 시의 Fragment onDetach() 에서 해당 function 을 call 했을 경우,
+                   // fragment.show 에서 Exception 이 발생할 수 있음.
+                   // 화면 회전 시에 새로운 fragment 를 띄우기를 원하는 것이 아니 므로 해당 에러는 무시함.
                    return
                }
             }
