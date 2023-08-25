@@ -107,8 +107,11 @@ object PollingCenter {
     /**
      * 폴링 센터에 등록된 모든 작업 삭제
      */
-    fun removeAllTasks() {
-        runnableMap.clear()
+    suspend fun removeAllTasks() {
+        mutex.withLock {
+            runnableMap.clear()
+        }
+
     }
 
     /**
@@ -131,6 +134,8 @@ object PollingCenter {
         thread?.quit()
         thread = null
         backgroundHandler = null
-        removeAllTasks()
+        runBlocking {
+            removeAllTasks()
+        }
     }
 }
