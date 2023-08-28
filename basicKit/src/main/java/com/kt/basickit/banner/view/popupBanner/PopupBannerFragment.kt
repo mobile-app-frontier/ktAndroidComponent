@@ -1,6 +1,5 @@
 package com.kt.basickit.banner.view.popupBanner
 
-import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,7 +15,7 @@ import com.kt.basickit.banner.domain.entity.BannerCloseType
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicyItem
 import com.kt.basickit.databinding.BottomSheetBinding
 
-internal class PopupBannerFragment() : BottomSheetDialogFragment() {
+internal class PopupBannerFragment : BottomSheetDialogFragment() {
     companion object {
         private const val POPUP_BANNER_POLICY_ITEM_KEY = "popup_banner_policy_item"
     }
