@@ -37,9 +37,6 @@ object PollingCenter {
      * 사용자가 직접 cancel을 호출 하지 않는 한, 어플리케이션이 실행 되는 동안 동일한 스레드에서 폴링 실행됨.
      */
     fun setPollingCenter() {
-        thread.apply {
-
-        }
         if (thread == null) {
             thread = HandlerThread(HANDLER_NAME).apply {
                 start()
