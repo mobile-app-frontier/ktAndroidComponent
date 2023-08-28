@@ -6,15 +6,15 @@ import kotlinx.parcelize.Parcelize
 import java.util.Calendar
 import java.util.Date
 
-public interface BannerPolicyItem {
-    public val id: String
-    public val priority: Int
-    public val targetAppVersion: Version?
-    public val landingType: BannerLandingType
-    public val additionalInfo: Map<String, String>?
+internal interface BannerPolicyItem {
+    val id: String
+    val priority: Int
+    val targetAppVersion: Version?
+    val landingType: BannerLandingType
+    val additionalInfo: Map<String, String>?
 }
 
-public enum class BannerCloseType {
+internal enum class BannerCloseType {
     CloseOnly,
     NeverShowAgain,
     NotShowForWeek,
@@ -46,7 +46,7 @@ public enum class BannerCloseType {
         }
 
     companion object {
-        public fun fromString(rawValue: String?): BannerCloseType {
+        internal fun fromString(rawValue: String?): BannerCloseType {
             return when (rawValue) {
                 "close" -> CloseOnly
                 "never" -> NeverShowAgain
@@ -65,7 +65,7 @@ public sealed class BannerLandingType : Parcelable {
     public data class InApp(val destination: String): BannerLandingType()
 
     companion object {
-        fun fromString(rawValue: String?, url: String?): BannerLandingType {
+        internal fun fromString(rawValue: String?, url: String?): BannerLandingType {
             return when (rawValue) {
                 null -> None
                 "" -> None

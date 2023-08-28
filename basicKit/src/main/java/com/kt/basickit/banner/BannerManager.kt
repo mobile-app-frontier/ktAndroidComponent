@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.kt.basickit.banner.domain.entity.BannerLandingType
 import com.kt.basickit.banner.domain.entity.BannerPolicy
+import com.kt.basickit.banner.domain.entity.BannerPolicyImpl
 import com.kt.basickit.banner.domain.entity.DefaultBannerPolicyItem
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicy
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicyItem
@@ -26,12 +27,11 @@ import kotlinx.coroutines.launch
 import java.util.Date
 
 public object BannerManager {
-
     private var isInitialized = false
     private var isStarted = false // Android 의 경우, 화면을 회전할 경우 Activity 가 재시작 되므로 LaunchedEffect 를 사용 하더 라도 function 이
                                     // 여러번 호출됨. 따라서 Singleton 인 BannerManager 에서 이를 직접 관리함.
 
-    private var bannerPolicy: BannerPolicy? = null
+    private var bannerPolicy: BannerPolicyImpl? = null
 
     // Coroutine
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
@@ -66,7 +66,7 @@ public object BannerManager {
 
     // 여러 번 호출 될 수 있음. BannerManager 는 Singleton 이므로 App lifecycle 동안 여러번 fetch 될 수 있기 때문에
     internal fun initialize(
-        bannerPolicy: BannerPolicy?,
+        bannerPolicy: BannerPolicyImpl?,
         localBannerPolicyGetter: suspend () -> LocalBannerPolicy,
         localBannerPolicySetter: suspend (LocalBannerPolicy) -> Unit
     ) {

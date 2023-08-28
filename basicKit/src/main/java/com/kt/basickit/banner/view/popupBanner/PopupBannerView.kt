@@ -10,7 +10,7 @@ import com.kt.basickit.banner.view.popupBanner.button.PopupBannerButton
 import com.kt.basickit.banner.view.popupBanner.content.PopupContentBannerView
 
 @Composable
-fun PopupBannerView(
+internal fun PopupBannerView(
     modifier: Modifier = Modifier,
     banner: PopupBannerPolicyItem,
     dismiss: () -> Unit

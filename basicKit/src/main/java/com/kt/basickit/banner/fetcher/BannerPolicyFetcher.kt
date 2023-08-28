@@ -6,7 +6,9 @@ import coil.request.ImageRequest
 import com.kt.basickit.banner.BannerManager
 import com.kt.basickit.banner.LocalBannerPolicy
 import com.kt.basickit.banner.MutableLocalBannerPolicy
+import com.kt.basickit.banner.data.source.BannerPolicyDataSource
 import com.kt.basickit.banner.domain.entity.BannerPolicy
+import com.kt.basickit.banner.domain.entity.BannerPolicyImpl
 import com.kt.basickit.banner.domain.entity.DefaultBannerPolicy
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicy
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicyItem
@@ -21,13 +23,14 @@ import java.util.Calendar
 import java.util.Date
 public class BannerPolicyFetcher(
     private val context: Context,
-    private val repository: BannerPolicyRepository,
+    dataSource: BannerPolicyDataSource,
     private val localBannerPolicyGetter: suspend () -> LocalBannerPolicy,
     private val localBannerPolicySetter: suspend (LocalBannerPolicy) -> Unit,
     appVersion: String
 ) {
     private val mutableState = MutableStateFlow<BannerPolicyState>(BannerPolicyState.Initial)
     private val appVersion = Version.createVersion(appVersion)
+    private val repository = BannerPolicyRepository(dataSource)
 
     public val state: StateFlow<BannerPolicyState>
         get() = mutableState.asStateFlow()
@@ -54,7 +57,7 @@ public class BannerPolicyFetcher(
         }
     }
 
-    private suspend fun handleBannerPolicy(remoteBanner: BannerPolicy, localBanner: LocalBannerPolicy) {
+    private suspend fun handleBannerPolicy(remoteBanner: BannerPolicyImpl, localBanner: LocalBannerPolicy) {
         // default banner filtering
         val filteredDefaultBanner = filterValidRemoteBannerPolicy(remoteBanner.defaultBanner)
 
@@ -64,7 +67,7 @@ public class BannerPolicyFetcher(
         // local 정책 update
         localBannerPolicySetter(filteredPopupBanner.second)
 
-        val bannerPolicy = BannerPolicy(
+        val bannerPolicy = BannerPolicyImpl(
             defaultBanner = filteredDefaultBanner,
             popupBanner = filteredPopupBanner.first
         )
