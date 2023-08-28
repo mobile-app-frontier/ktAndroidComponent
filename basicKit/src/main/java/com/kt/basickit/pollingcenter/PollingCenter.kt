@@ -19,7 +19,7 @@ object PollingCenter {
     private const val TAG = "PollingCenter"
     private const val HANDLER_NAME = "Custom handler thread"
 
-    private val mutex = Mutex()
+    private val runnableMapMutex = Mutex()
     private var backgroundHandler: Handler? = null
     private var thread: HandlerThread? = null
     private val runnableMap = ConcurrentHashMap<String, RunnableWorkableItem>()
@@ -37,10 +37,14 @@ object PollingCenter {
      * 사용자가 직접 cancel을 호출 하지 않는 한, 어플리케이션이 실행 되는 동안 동일한 스레드에서 폴링 실행됨.
      */
     fun setPollingCenter() {
+        thread.apply {
+
+        }
         if (thread == null) {
-            thread = HandlerThread(HANDLER_NAME)
-            thread!!.start()
-            backgroundHandler = Handler(thread!!.looper)
+            thread = HandlerThread(HANDLER_NAME).apply {
+                start()
+                backgroundHandler = Handler(this.looper)
+            }
         }
     }
 
@@ -48,7 +52,7 @@ object PollingCenter {
      * 폴링 작업을 추가할 때 사용
      */
     suspend fun addTask(workable: WorkableItem) {
-        mutex.withLock {
+        runnableMapMutex.withLock {
             if (runnableMap.containsKey(workable.key)) return
             val task = makePollingRunnable(workable.onPolling, workable.interval)
             runnableMap[workable.key] = RunnableWorkableItem(workable, task)
@@ -98,7 +102,7 @@ object PollingCenter {
      * 폴링 작업의 키를 넣어 폴링 센터에서 삭제
      */
     suspend fun removeTask(key: String) {
-        mutex.withLock {
+        runnableMapMutex.withLock {
             if (runnableMap.containsKey(key)) {
                 val task = runnableMap[key]!!
                 backgroundHandler?.removeCallbacks(task.runnable)
@@ -111,10 +115,9 @@ object PollingCenter {
      * 폴링 센터에 등록된 모든 작업 삭제
      */
     suspend fun removeAllTasks() {
-        mutex.withLock {
+        runnableMapMutex.withLock {
             runnableMap.clear()
         }
-
     }
 
     /**
