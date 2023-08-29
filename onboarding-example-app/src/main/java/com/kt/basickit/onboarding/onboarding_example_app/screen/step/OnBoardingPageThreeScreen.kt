@@ -2,7 +2,9 @@ package com.kt.basickit.onboarding.onboarding_example_app.screen.step
 
 import android.util.Log
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -10,16 +12,19 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.example.onboarding.navigator.AppNavigationRoute
-import com.example.onboarding.navigator.onboarding.LocalNavigationProvider
+import com.kt.basickit.onboarding.onboarding_example_app.navigator.AppNavigationRoute
+import com.kt.basickit.onboarding.onboarding_example_app.navigator.onboarding.LocalNavigationProvider
 import com.kt.basickit.onboarding.OnBoardingComplete
 import com.kt.basickit.onboarding.OnBoardingViewModel
-import com.kt.basickit.onboarding.onboarding_example_app.navigator.onboarding.AppOnBoardingRoute
 
 @Composable
-fun OperationTimeEventScreen(
+fun OnBoardingPageThreeScreen(
     onBoardingNavController: NavHostController,
     onBoardingController: OnBoardingViewModel
 ) {
@@ -43,12 +48,16 @@ fun OperationTimeEventScreen(
         onBoardingController.prev()
     }
 
-    Column {
-        Text("event!!! ${onBoardingState.currentStep}")
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text("page 3", fontSize = 24.sp, fontWeight = FontWeight.Bold)
         Button(onClick = {
             onBoardingController.next()
         }) {
-            Text("클릭")
+            Text("complete", fontSize = 24.sp, fontWeight = FontWeight.Bold)
         }
     }
 }

@@ -6,9 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.onboarding.navigator.AppNavigationRoute
 import com.kt.basickit.onboarding.onboarding_example_app.navigator.onboarding.AppOnBoardingRoute
-import com.example.onboarding.navigator.onboarding.LocalNavigationProvider
+import com.kt.basickit.onboarding.onboarding_example_app.navigator.onboarding.LocalNavigationProvider
 import com.kt.basickit.onboarding.OnBoardingScreen
 import com.kt.basickit.onboarding.onboarding_example_app.screen.MainScreen
 import com.kt.basickit.onboarding.onboarding_example_app.screen.RootScreen

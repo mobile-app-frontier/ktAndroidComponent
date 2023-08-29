@@ -1,4 +1,4 @@
-package com.example.onboarding.navigator.onboarding
+package com.kt.basickit.onboarding.onboarding_example_app.navigator.onboarding
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.navigation.NavHostController
