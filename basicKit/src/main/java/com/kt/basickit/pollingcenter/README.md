@@ -33,7 +33,7 @@ class MainActivity :
         super.onCreate(savedInstanceState)
         initializePollingCenter() /// 폴링 센터 초기화
         setContent {
-            NavtesterTheme {
+            PollingTesterTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -71,7 +71,7 @@ fun PollingSample() {
 ## Structure
 `WorkableItem`
 | name | Type | Description |
-| :--- | :---: | ---: | --- |
+| :--- | :--: | ----------: |
 | key | String | 폴링 작업의 고유키 |
 | pollingType | PollingCenter.PollingType | 업폴링 작업 추가 시 바로 실행 할 지 여부 |
 | interval | Long | 폴링 작업 실행 주기 |
