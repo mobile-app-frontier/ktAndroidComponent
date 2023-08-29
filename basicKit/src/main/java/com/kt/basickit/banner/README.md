@@ -146,19 +146,19 @@ contentType 에 따라서 달라짐
 - "T": content 영역에 보여주고 싶은 문자열
 - "H": HTML 형식의 String. HTML String 자체에 링크를 거는 것은 권장하지 않음.
 
-### landingType
+#### landingType
 - "none" or "" : landing 되지 않음.
 - "web": web view landing.
 - All the rest: inapp landing.
 
-### closeType
+#### closeType
 `DefaultBanner` 일 경우에만 지원.
 - "close": 닫기. 한번 보여주고 다시 보여주지 않음.
 - "never": 다시 보지 않기.
 - "week": 일주일 동안 보지 않기.
 - "today": 오늘은 보지 않기.
 
-### type
+#### type
 - "default": Image Slider 배너
 - "popup" : Sheet 배너
 
