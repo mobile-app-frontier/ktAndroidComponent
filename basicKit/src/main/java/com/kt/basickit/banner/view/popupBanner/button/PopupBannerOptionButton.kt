@@ -14,7 +14,7 @@ import com.kt.basickit.banner.BannerManager
 import com.kt.basickit.banner.domain.entity.BannerCloseType
 
 @Composable
-fun PopupBannerOptionButton(
+internal fun PopupBannerOptionButton(
     bannerId: String, closeType: BannerCloseType,
     dismiss: () -> Unit
 ) {

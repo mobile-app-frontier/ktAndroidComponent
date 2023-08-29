@@ -6,18 +6,18 @@ import com.kt.basickit.util.Version
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-public data class PopupBannerPolicyItem(
-    public override val id: String,
-    public override val priority: Int,
-    public override val targetAppVersion: Version?,
-    public override val landingType: BannerLandingType,
-    public override val additionalInfo: Map<String, String>? = null,
+internal data class PopupBannerPolicyItem(
+    override val id: String,
+    override val priority: Int,
+    override val targetAppVersion: Version?,
+    override val landingType: BannerLandingType,
+    override val additionalInfo: Map<String, String>? = null,
 
-    public val content: Content,
-    public val closeType: BannerCloseType
+    internal val content: Content,
+    internal val closeType: BannerCloseType
 ) : Comparable<PopupBannerPolicyItem>, BannerPolicyItem, Parcelable {
     companion object {
-        fun fromModel(model: BannerPolicyItemModel): PopupBannerPolicyItem {
+        internal fun fromModel(model: BannerPolicyItemModel): PopupBannerPolicyItem {
             return PopupBannerPolicyItem(
                 id = model.id,
                 priority = model.priority,
@@ -31,7 +31,7 @@ public data class PopupBannerPolicyItem(
     }
 
     @Parcelize
-    public sealed class Content : Parcelable {
+    internal sealed class Content : Parcelable {
         data class Text(val text: String) : Content()
 
         data class Html(val html: String) : Content()
@@ -39,7 +39,7 @@ public data class PopupBannerPolicyItem(
         data class Image(val url: String): Content()
 
         companion object {
-            fun fromModel(type: String, content: String): Content {
+            internal fun fromModel(type: String, content: String): Content {
                 return when (type) {
                     "T" -> Text(content)
                     "H" -> Html(content)

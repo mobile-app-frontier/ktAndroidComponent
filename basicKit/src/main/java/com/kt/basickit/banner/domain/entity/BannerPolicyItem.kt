@@ -1,20 +1,18 @@
 package com.kt.basickit.banner.domain.entity
 
-import android.os.Parcelable
 import com.kt.basickit.util.Version
-import kotlinx.parcelize.Parcelize
 import java.util.Calendar
 import java.util.Date
 
-public interface BannerPolicyItem {
-    public val id: String
-    public val priority: Int
-    public val targetAppVersion: Version?
-    public val landingType: BannerLandingType
-    public val additionalInfo: Map<String, String>?
+internal interface BannerPolicyItem {
+    val id: String
+    val priority: Int
+    val targetAppVersion: Version?
+    val landingType: BannerLandingType
+    val additionalInfo: Map<String, String>?
 }
 
-public enum class BannerCloseType {
+internal enum class BannerCloseType {
     CloseOnly,
     NeverShowAgain,
     NotShowForWeek,
@@ -46,7 +44,7 @@ public enum class BannerCloseType {
         }
 
     companion object {
-        public fun fromString(rawValue: String?): BannerCloseType {
+        internal fun fromString(rawValue: String?): BannerCloseType {
             return when (rawValue) {
                 "close" -> CloseOnly
                 "never" -> NeverShowAgain
@@ -58,23 +56,5 @@ public enum class BannerCloseType {
     }
 }
 
-@Parcelize
-public sealed class BannerLandingType : Parcelable {
-    public object None: BannerLandingType()
-    public data class Web(val url: String): BannerLandingType()
-    public data class InApp(val destination: String): BannerLandingType()
-
-    companion object {
-        fun fromString(rawValue: String?, url: String?): BannerLandingType {
-            return when (rawValue) {
-                null -> None
-                "" -> None
-                "none" -> None
-                "web" -> url?.let { Web(url = it) } ?: None
-                else -> InApp(destination = rawValue)
-            }
-        }
-    }
-}
 
 

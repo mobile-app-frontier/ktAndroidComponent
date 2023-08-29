@@ -6,7 +6,7 @@ import com.example.bannerexampleapp.BuildConfig
 import com.example.bannerexampleapp.core.base.StateViewModel
 import com.example.bannerexampleapp.core.datastore.PreferenceDataStore
 import com.example.bannerexampleapp.core.logger.Logger
-import com.example.bannerexampleapp.domain.usecase.BannerPolicyUseCase
+import com.example.bannerexampleapp.data.source.BannerPolicyDataSourceImpl
 import com.kt.basickit.banner.LocalBannerPolicy
 import com.kt.basickit.banner.fetcher.BannerPolicyFetcher
 import com.kt.basickit.banner.fetcher.BannerPolicyState
@@ -24,13 +24,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StartViewModel @Inject constructor(
-    @ApplicationContext val application: Context,
+    @ApplicationContext application: Context,
     private val preferenceDataStore: PreferenceDataStore,
-    private val useCase: BannerPolicyUseCase
+    dataSource: BannerPolicyDataSourceImpl
 ) : StateViewModel<StartState>(initialState = StartState.Loading) {
     private val bannerPolicyFetcher = BannerPolicyFetcher(
         context = application.applicationContext,
-        repository = useCase,
+        dataSource = dataSource,
         localBannerPolicyGetter = { return@BannerPolicyFetcher readLocalBannerPolicy() },
         localBannerPolicySetter = { saveLocalBannerPolicy(localBannerPolicy = it) },
         appVersion = BuildConfig.VERSION_NAME,
