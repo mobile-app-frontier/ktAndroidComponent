@@ -8,14 +8,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kt.basickit.banner.BannerManager
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicyItem
 
 @Composable
 internal fun PopupTextContentBannerView(content: PopupBannerPolicyItem.Content.Text) {
     Text(
         content.text,
-        fontWeight = FontWeight.Medium,
-        fontSize = 16.sp,
+        style = BannerManager.popupBannerTextStyle,
         modifier = Modifier
             .padding(horizontal = 10.dp)
             .padding(vertical = 20.dp)

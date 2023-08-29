@@ -19,3 +19,17 @@ fun TextStyle.Companion.defaultButtonTextStyle(): TextStyle {
         textAlign = TextAlign.Center
     )
 }
+
+/**
+ * Default Banner Text 의 default text style
+ *
+ * @return
+ */
+fun TextStyle.Companion.defaultBannerTextStyle(): TextStyle {
+    return TextStyle(
+        fontWeight = FontWeight.Medium,
+        fontSize = 16.sp,
+        color = Color.Black,
+        textAlign = TextAlign.Start
+    )
+}

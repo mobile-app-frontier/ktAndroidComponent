@@ -7,7 +7,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.kt.basickit.banner.domain.entity.BannerLandingType
-import com.kt.basickit.banner.domain.entity.BannerPolicy
 import com.kt.basickit.banner.domain.entity.BannerPolicyImpl
 import com.kt.basickit.banner.domain.entity.DefaultBannerPolicyItem
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicy
@@ -15,6 +14,7 @@ import com.kt.basickit.banner.domain.entity.PopupBannerPolicyItem
 import com.kt.basickit.banner.exception.BannerPolicyException
 import com.kt.basickit.banner.view.defaultBanner.DefaultBannerFragment
 import com.kt.basickit.banner.view.defaultBanner.DefaultBannerView
+import com.kt.basickit.banner.view.option.defaultBannerTextStyle
 import com.kt.basickit.banner.view.option.defaultButtonTextStyle
 import com.kt.basickit.banner.view.popupBanner.PopupBannerFragment
 import kotlinx.coroutines.CoroutineScope
@@ -63,6 +63,7 @@ public object BannerManager {
     // 보여줄 Popup Banner Policy. 이미 보여준 배너는 들어 있지 않음.
     private var willShowPopupBannerPolicy = PopupBannerPolicy()
     internal var buttonTextStyle: TextStyle = TextStyle.defaultButtonTextStyle()
+    internal var popupBannerTextStyle: TextStyle = TextStyle.defaultBannerTextStyle()
 
     // Landing
     private val mutableLandingType = MutableSharedFlow<BannerLandingType>()
@@ -105,18 +106,25 @@ public object BannerManager {
      * @param context
      * @param buttonTextStyle PopupBanner Button 의 TextStyle.
      * null 일 경우 [TextStyle.Companion.defaultButtonTextStyle] 를 사용.
+     * @param popupBannerTextStyle PopupBanner contentType 이 Text 일 때의 TextStyle.
+     * null 일 경우 [TextStyle.Companion.defaultBannerTextStyle] 를 사용.
      *
      * @throws [BannerPolicyException.InvalidState] BannerPolicyFetcher fetch 성공 전에 BannerManager 사용시 발생.
      * @throws [BannerPolicyException.FailToStartPopup] Activity 가 FragmentActivity 가 아닐 경우 발생.
      */
-    public fun startPopupBanner(context: Context, buttonTextStyle: TextStyle? = null) {
+    public fun startPopupBanner(
+        context: Context,
+        buttonTextStyle: TextStyle? = null,
+        popupBannerTextStyle: TextStyle? = null
+    ) {
         if (!isInitialized) { throw BannerPolicyException.InvalidState("Failed BannerFetcher") }
 
         if (isStarted) { return }
 
         isStarted = true
 
-        this.buttonTextStyle = buttonTextStyle ?: TextStyle.Companion.defaultButtonTextStyle()
+        this.buttonTextStyle = buttonTextStyle ?: TextStyle.defaultButtonTextStyle()
+        this.popupBannerTextStyle = popupBannerTextStyle ?: TextStyle.defaultBannerTextStyle()
 
         bannerPolicy?.let { bannerPolicy ->
             scope.launch {
