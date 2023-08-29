@@ -69,7 +69,7 @@ fun PollingSample() {
 ```
 
 ## Structure
-`WorkableItem`
+### `WorkableItem`
 | name | Type | Description |
 | :--- | :--: | ----------: |
 | key | String | 폴링 작업의 고유키 |
