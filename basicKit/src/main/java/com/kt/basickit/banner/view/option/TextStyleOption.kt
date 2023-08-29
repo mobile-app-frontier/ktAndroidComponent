@@ -6,6 +6,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 
+/**
+ * Default Banner Button 의 default text style
+ *
+ * @return
+ */
 fun TextStyle.Companion.defaultButtonTextStyle(): TextStyle {
     return TextStyle(
         fontWeight = FontWeight.SemiBold,
