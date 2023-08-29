@@ -17,3 +17,4 @@ rootProject.name = "ComposableKit"
 include ':basicKit'
 include ':advancedKit'
 include ':banner-example-app'
+include ':pollingcenter-example-app'
