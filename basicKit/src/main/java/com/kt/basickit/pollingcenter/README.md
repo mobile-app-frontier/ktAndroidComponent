@@ -73,6 +73,6 @@ fun PollingSample() {
 | name | Type | Description |
 | :--- | :--: | ----------: |
 | key | String | 폴링 작업의 고유키 |
-| pollingType | PollingCenter.PollingType | 업폴링 작업 추가 시 바로 실행 할 지 여부 |
+| pollingType | PollingCenter.PollingType | 폴링 작업 추가 시 바로 실행 할 지 여부 |
 | interval | Long | 폴링 작업 실행 주기 |
 | onPolling | OnPolling | 수행할 폴링 작업 |
