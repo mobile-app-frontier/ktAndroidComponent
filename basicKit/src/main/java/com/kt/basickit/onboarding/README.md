@@ -2,13 +2,16 @@
 
 OnBoarding은 몇 개의 스탭을 가지며 이전 또는 다음 스탭으로 이동하는 시나리오를 구현합니다.
 
-각 스탭은 고유한 라우트와 보여줄 화면을 가지고 구성 됩니다.
-스탭들의 리스트를 가지고 온보딩 시나리오를 구현할 수 있습니다.
+각 스탭은 고유한 라우트와 화면을 가지고 구성 됩니다.
+스탭 리스트를 가지고 온보딩 시나리오를 구현할 수 있습니다.
+
+- [사용 방법](#how_to_use)
+- [Structure](#structure)
 
 ## 사용 방법
 ### Step 1
-온보딩에 이용할 스탭에서 보여줄 화면을 구현 합니다.
-각 화면에서 온보딩 내비게이션 컨트롤러 또는 온보딩 진행 관련 조작이 필요하다면 [NavHostController], [OnBoardingViewModel]을 이용할 수 있습니다.
+스탭에서 보여줄 화면을 구현 합니다.
+각 화면에서 온보딩 내비게이션 컨트롤러 또는 온보딩 진행 관련 조작이 필요하다면 `NavHostController`, `OnBoardingViewModel`을 이용할 수 있습니다.
 
 ```Kotlin
 @Composable
@@ -45,7 +48,7 @@ fun OnBoardingStepOneScreen(
 ```
 
 ### Step 2
-이전에 정의한 스탭 별 화면과, 화면의 고유한 경로를 정의 하여 OnBoardingRoute 를 구현 합니다.
+이전에 정의한 스탭 화면과 스탭 라우트를 넣어 `OnBoardingRoute`를 구현합니다.
 ``` Kotlin
 enum class AppOnBoardingRoute(
     override val routeName: String,
@@ -54,11 +57,11 @@ enum class AppOnBoardingRoute(
     
     OnBoardingPageOne(
         "/onBoardingPageOne",
-        screen = { onBoardingNavController, onBoardingController -> OnBoardingPageOneScreen(onBoardingNavController, onBoardingController) },
+        screen = { onBoardingNavController, onBoardingController -> OnBoardingStepOneScreen(onBoardingNavController, onBoardingController) },
     ),
     OnBoardingPageTwo(
         "/onBoardingPageTwo",
-        screen = { onBoardingNavController, onBoardingController -> OnBoardingPageTwoScreen(onBoardingNavController, onBoardingController) },
+        screen = { onBoardingNavController, onBoardingController -> OnBoardingStepTwoScreen(onBoardingNavController, onBoardingController) },
     ),
     // ...
     ;
@@ -66,18 +69,17 @@ enum class AppOnBoardingRoute(
 ```
 
 ### Step 3
-OnBoarding에서 보여 주고자 하는 스탭들을 파라미터로 넣어 OnBoardingScreen을 생성 합니다.
+OnBoarding에서 보여 주고자 하는 스탭들을 파라미터로 넣어 `OnBoardingScreen`을 생성합니다.
 이 때, OnBoarding 스탭 별 화면에 상관 없이 OnBoarding 내내 보여줄 뷰를 넣을 수 있습니다.
 ```kotlin
 OnBoardingScreen(
     steps = AppOnBoardingRoute.values().toList(),
+    // 상단에 뷰를 띄워주는 예시. 프로그래스 뷰 등을 띄울 수 있음.
     onBoardingTopArea = { onBoardingNavController, onBoardingViewModel ->
         ProgressView(onBoardingNavController, onBoardingViewModel)
     }
 )
 ```
-
-- [Structure](#structure)
 
 ## Structure
 ### `OnBoardingScreen`
