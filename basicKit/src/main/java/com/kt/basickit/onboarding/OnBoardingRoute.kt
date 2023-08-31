@@ -1,7 +1,10 @@
 package com.kt.basickit.onboarding
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.viewbinding.ViewBinding
 
 /**
  * OnBoarding에서 진행할 개별 스탭의 구성 요소.
@@ -11,5 +14,15 @@ import androidx.navigation.NavHostController
  */
 interface OnBoardingRoute {
     val routeName: String
+}
+
+interface XmlOnBoardingRoute : OnBoardingRoute {
+    override val routeName: String
+    val binding: (inflater: LayoutInflater, parent: ViewGroup, attachToParent: Boolean) -> ViewBinding
+    fun<T: ViewBinding> update(viewBinding:T, onBoardingViewModel:OnBoardingViewModel)
+}
+
+interface ComposeOnBoardingRoute: OnBoardingRoute {
+    override val routeName: String
     val screen: @Composable (NavHostController, OnBoardingViewModel) -> Unit
 }

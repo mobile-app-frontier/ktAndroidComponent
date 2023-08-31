@@ -3,6 +3,7 @@ package com.kt.basickit.onboarding
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -24,7 +25,7 @@ fun <CustomStep : OnBoardingRoute> OnBoardingScreen(
     onBoardingBottomArea: (@Composable (NavHostController, OnBoardingViewModel) -> Unit)? = null,
 ) {
     val onBoardingNavController = rememberNavController()
-    val onBoardingViewModel : OnBoardingViewModelImpl = remember {
+    val onBoardingViewModel: OnBoardingViewModelImpl = remember {
         OnBoardingViewModelImpl(
             navController = onBoardingNavController,
             steps = steps,
@@ -35,7 +36,11 @@ fun <CustomStep : OnBoardingRoute> OnBoardingScreen(
         onBoardingTopArea?.let {
             onBoardingTopArea(onBoardingNavController, onBoardingViewModel)
         }
-        OnBoardingNavHost(onBoardingNavController = onBoardingNavController, onBoardingViewModel = onBoardingViewModel, steps = steps,)
+        OnBoardingNavHost(
+            onBoardingNavController = onBoardingNavController,
+            onBoardingViewModel = onBoardingViewModel,
+            steps = steps,
+        )
         onBoardingBottomArea?.let {
             onBoardingBottomArea(onBoardingNavController, onBoardingViewModel)
         }
@@ -58,11 +63,28 @@ private fun <CustomStep : OnBoardingRoute> OnBoardingNavHost(
         navController = onBoardingNavController,
         startDestination = steps.first().routeName,
     ) {
-        steps.forEach { onBoardingRoute ->
-            composable(
-                route = onBoardingRoute.routeName
-            ) {
-                onBoardingRoute.screen(onBoardingNavController, onBoardingViewModel)
+        if (steps.first() is ComposeOnBoardingRoute) {
+            steps.forEach { onBoardingRoute ->
+                val onBoardingRoute = onBoardingRoute as ComposeOnBoardingRoute
+                composable(
+                    route = onBoardingRoute.routeName
+                ) {
+                    onBoardingRoute.screen(onBoardingNavController, onBoardingViewModel)
+                }
+            }
+        } else {
+            steps.forEach { onBoardingRoute ->
+                composable(
+                    route = onBoardingRoute.routeName
+                ) {
+                    val onBoardingRoute = onBoardingRoute as XmlOnBoardingRoute
+                    AndroidViewBinding(
+                        factory = onBoardingRoute.binding,
+                        update = {
+                            onBoardingRoute.update(this, onBoardingViewModel)
+                        }
+                    )
+                }
             }
         }
     }
