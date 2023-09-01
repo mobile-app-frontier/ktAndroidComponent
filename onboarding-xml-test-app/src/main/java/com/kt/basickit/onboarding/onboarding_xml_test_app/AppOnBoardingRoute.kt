@@ -1,4 +1,4 @@
-package com.kt.basickit.onboarding.onboarding_xml_test_app.navigator.onboarding
+package com.kt.basickit.onboarding.onboarding_xml_test_app
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

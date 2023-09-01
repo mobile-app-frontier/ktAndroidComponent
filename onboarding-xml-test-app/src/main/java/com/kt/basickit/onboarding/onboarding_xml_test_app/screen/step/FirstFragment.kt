@@ -33,19 +33,6 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        onBackPressed {
-            val dialog = AlertDialog.Builder(requireContext())
-                .setTitle("Dialog Title")
-                .setMessage("Dialog Message")
-                .setPositiveButton("OK") { dialog, which ->
-                    Log.d("onBoarding", "exit")
-                    Navigation.findNavController(requireActivity(), R.id.nav_host).popBackStack()
-                }
-                .setNegativeButton("Cancel", null)
-                .create()
-            dialog.show()
-        }
-
         val composeView = view.findViewById<ComposeView>(R.id.composeView)
         composeView.setContent {
             OnBoardingScreen(
@@ -54,17 +41,42 @@ class FirstFragment : Fragment() {
                         binding = OnboardingPageOneBinding::inflate,
                         updateBiding = { viewBinding, onBoardingViewModel ->
                             viewBinding.onboardingViewModel = onBoardingViewModel
+                            requireActivity().onBackPressedDispatcher.addCallback(
+                                viewLifecycleOwner,
+                                object : OnBackPressedCallback(true) {
+                                    override fun handleOnBackPressed() {
+                                        val dialog = AlertDialog.Builder(requireContext())
+                                            .setTitle("Dialog Title")
+                                            .setMessage("Dialog Message")
+                                            .setPositiveButton("OK") { dialog, which ->
+                                                Log.d("onBoarding", "exit")
+                                                Navigation.findNavController(requireActivity(), R.id.nav_host).popBackStack()
+                                            }
+                                            .setNegativeButton("Cancel", null)
+                                            .create()
+                                        dialog.show()
+                                    }
+                                }
+                            )
                         }
                     ),
                     OnBoardingPageTwo(
                         binding = OnboardingPageTwoBinding::inflate,
                         updateBiding = { viewBinding, onBoardingViewModel ->
                             viewBinding.onboardingViewModel = onBoardingViewModel
-                            viewBinding.endOnboarding.setOnClickListener {
+                            viewBinding.endOnboardingButton.setOnClickListener {
                                 Navigation.findNavController(requireActivity(), R.id.nav_host).navigate(
                                     R.id.action_firstFragment_to_homeFragment
                                 )
                             }
+                            requireActivity().onBackPressedDispatcher.addCallback(
+                                viewLifecycleOwner,
+                                object : OnBackPressedCallback(true) {
+                                    override fun handleOnBackPressed() {
+                                        onBoardingViewModel.prev()
+                                    }
+                                }
+                            )
                         }
                     ),
                 ),

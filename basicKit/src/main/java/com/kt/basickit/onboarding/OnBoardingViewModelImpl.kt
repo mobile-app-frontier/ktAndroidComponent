@@ -38,7 +38,7 @@ internal class OnBoardingViewModelImpl(
      * 호출 시 더 이상 진행할 스탭이 없다면 [OnBoardingComplete] 상태를 발행.
      */
     override fun next() {
-        Log.d("next", "pressed")
+        Log.d("next", "pressed ${controllerState.value.currentStep}")
         if (controllerState.value.totalStepSize - 1 == controllerState.value.currentStep) {
             viewModelScope.launch {
                 _state.emit(
