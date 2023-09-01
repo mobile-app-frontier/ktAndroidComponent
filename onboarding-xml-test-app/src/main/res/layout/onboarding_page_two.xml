@@ -10,18 +10,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/onboarding_page_two" />
-
         <Button
-            android:id="@+id/xmlButton"
+            android:id="@+id/end_onboarding"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Next2"
-            android:onClick="@{() -> onboardingViewModel.next()}" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </layout>
