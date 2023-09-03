@@ -5,7 +5,6 @@
 
 - [Example](#example)
 - [XML version](#xmlactivityfragment-version)
-- [API Document](#api-document)
 
 ## Example
 
@@ -73,5 +72,3 @@ class PermissionActivity: AppCompatActivity() {
     }
 }
 ```
-
-## Api Document
