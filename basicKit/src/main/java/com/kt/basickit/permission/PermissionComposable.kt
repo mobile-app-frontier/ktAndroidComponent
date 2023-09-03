@@ -1,23 +1,31 @@
 package com.kt.basickit.permission
 
-import android.content.Context
-import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 
-/**
- * Launcher Composable
- */
 
+/**
+ * Remember permission launcher state
+ *
+ * @param result
+ * @receiver
+ */
 @Composable
 fun rememberPermissionLauncher (result: (Boolean)-> Unit) = rememberLauncherForActivityResult(
     contract = ActivityResultContracts.RequestPermission(),
     onResult = result
 )
 
+/**
+ * Request permission side effect
+ *
+ * @param permission
+ * @param result
+ * @receiver
+ */
 @Composable
 fun RequestPermissionEffect (permission: String, result:(PermissionState)-> Unit) {
     val launcher = rememberPermissionLauncher {
@@ -45,15 +53,32 @@ fun RequestPermissionEffect (permission: String, result:(PermissionState)-> Unit
 }
 
 /**
- * request Permission list
+ * Remember permissions launcher
+ *
+ * @param result
+ * @receiver
  */
-
 @Composable
 fun rememberPermissionsLauncher (result: (Map<String,Boolean>)-> Unit) = rememberLauncherForActivityResult(
     contract = ActivityResultContracts.RequestMultiplePermissions(),
     onResult = result
 )
 
+/**
+ * Request permissions effect
+ * ``` kotlin
+ *  @Composable
+ *  fun MainScreen() {
+ *      RequestPermissionsEffect(permissoins) {
+ *          // do something
+ *          viewModel.fetching()
+ *      }
+ *  }
+ * ```
+ * @param permissions
+ * @param result
+ * @receiver
+ */
 @Composable
 fun RequestPermissionsEffect (permissions: Array<String>, result:(Map<String, PermissionState>)-> Unit) {
     val launcher = rememberPermissionsLauncher {
