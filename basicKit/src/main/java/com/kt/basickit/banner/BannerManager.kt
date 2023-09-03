@@ -29,7 +29,7 @@ public object BannerManager {
 
     private var isInitialized = false
     private var isStarted = false // Android 의 경우, 화면을 회전할 경우 Activity 가 재시작 되므로 LaunchedEffect 를 사용 하더 라도 function 이
-                                    // 여러번 호출됨. 따라서 Singleton 인 BannerManager 에서 이를 직접 관리함.
+                                  // 여러번 호출됨. 따라서 Singleton 인 BannerManager 에서 이를 직접 관리함.
 
     private var bannerPolicy: BannerPolicy? = null
 
@@ -39,6 +39,7 @@ public object BannerManager {
     // Local Banner Policy
     private var localBannerPolicyGetter: (suspend () -> LocalBannerPolicy)? = null
     private var localBannerPolicySetter: (suspend (LocalBannerPolicy) -> Unit)? = null
+
     // 단말에 저장 되어 있는 LocalBannerPolicy + 새로 추가된 로컬 정책
     private val localBannerPolicy: MutableLocalBannerPolicy = mutableMapOf()
 
@@ -61,14 +62,13 @@ public object BannerManager {
                 dismiss()
             }
         }
-
     }
 
     // 여러 번 호출 될 수 있음. BannerManager 는 Singleton 이므로 App lifecycle 동안 여러번 fetch 될 수 있기 때문에
     internal fun initialize(
         bannerPolicy: BannerPolicy?,
         localBannerPolicyGetter: suspend () -> LocalBannerPolicy,
-        localBannerPolicySetter: suspend (LocalBannerPolicy) -> Unit
+        localBannerPolicySetter: suspend (LocalBannerPolicy) -> Unit,
     ) {
         isInitialized = true
         isStarted = false
@@ -81,25 +81,35 @@ public object BannerManager {
 
     @Composable
     public fun DefaultBannerView(category: String, modifier: Modifier = Modifier) {
-        if (!isInitialized) { throw BannerPolicyException.InvalidState("Failed BannerFetcher") }
+        if (!isInitialized) {
+            throw BannerPolicyException.InvalidState("Failed BannerFetcher")
+        }
 
         val defaultBanners = bannerPolicy?.defaultBanner?.get(category) ?: return
 
-        if (defaultBanners.isEmpty()) { return }
+        if (defaultBanners.isEmpty()) {
+            return
+        }
 
         return DefaultBannerView(banners = defaultBanners, modifier = modifier)
     }
 
     public fun getDefaultBannerFragment(category: String): Fragment {
-        if (!isInitialized) { throw BannerPolicyException.InvalidState("Failed BannerFetcher") }
+        if (!isInitialized) {
+            throw BannerPolicyException.InvalidState("Failed BannerFetcher")
+        }
 
         return DefaultBannerFragment(category)
     }
 
     public fun startPopupBanner(context: Context, buttonTextStyle: TextStyle? = null) {
-        if (!isInitialized) { throw BannerPolicyException.InvalidState("Failed BannerFetcher") }
+        if (!isInitialized) {
+            throw BannerPolicyException.InvalidState("Failed BannerFetcher")
+        }
 
-        if (isStarted) { return }
+        if (isStarted) {
+            return
+        }
 
         isStarted = true
 
@@ -109,7 +119,11 @@ public object BannerManager {
 
         bannerPolicy?.let { bannerPolicy ->
             scope.launch {
-                async { localBannerPolicyGetter?.let { it() } }.await()?.let { localBannerPolicy.putAll(it) }
+                async {
+                    localBannerPolicyGetter?.let {
+                        it()
+                    }
+                }.await()?.let { localBannerPolicy.putAll(it) }
             }
 
             willShowPopupBannerPolicy = bannerPolicy.popupBanner
@@ -124,21 +138,21 @@ public object BannerManager {
     // 보여줄 popup banner 중 높은 우선 순위의 popup banner 을 present 함.
     internal fun presentPopup(context: Context) {
         val activity = context as? FragmentActivity ?: throw BannerPolicyException.FailToStartPopup(
-            "Only FragmentActivity Can Use BannerManager"
+            "Only FragmentActivity Can Use BannerManager",
         )
         val fragmentManager = activity.supportFragmentManager
 
         if (willShowPopupBannerPolicy.isNotEmpty()) {
-           fragmentManager.let {
-               val fragment = PopupBannerFragment()
-               try {
-                   fragment.show(it, fragment.tag)
-               } catch (e: Throwable) {
-                   // 화면 회전시 Activity 가 소멸 하므로, 화면 회전 시의 Fragment onDetach() 에서 해당 function 을 call 했을 경우,
-                   // fragment.show 에서 Exception 이 발생할 수 있음.
-                   // 화면 회전 시에 새로운 fragment 를 띄우기를 원하는 것이 아니 므로 해당 에러는 무시함.
-                   return
-               }
+            fragmentManager.let {
+                val fragment = PopupBannerFragment()
+                try {
+                    fragment.show(it, fragment.tag)
+                } catch (e: Throwable) {
+                    // 화면 회전시 Activity 가 소멸 하므로, 화면 회전 시의 Fragment onDetach() 에서 해당 function 을 call 했을 경우,
+                    // fragment.show 에서 Exception 이 발생할 수 있음.
+                    // 화면 회전 시에 새로운 fragment 를 띄우기를 원하는 것이 아니 므로 해당 에러는 무시함.
+                    return
+                }
             }
         }
     }

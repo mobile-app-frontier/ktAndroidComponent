@@ -14,7 +14,7 @@ import com.kt.basickit.R
 import com.kt.basickit.banner.BannerManager
 import com.kt.basickit.banner.domain.entity.DefaultBannerPolicyItem
 
-public class DefaultBannerFragment(): Fragment() {
+public class DefaultBannerFragment() : Fragment() {
     private lateinit var banners: List<DefaultBannerPolicyItem>
 
     internal constructor(category: String) : this() {
@@ -37,7 +37,7 @@ public class DefaultBannerFragment(): Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {

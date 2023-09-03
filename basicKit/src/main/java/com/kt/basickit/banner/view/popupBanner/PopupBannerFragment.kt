@@ -34,7 +34,10 @@ internal class PopupBannerFragment : BottomSheetDialogFragment() {
     override fun dismiss() {
         super.dismiss()
         if (banner.closeType == BannerCloseType.CloseOnly) {
-            BannerManager.saveLocalBannerPolicy(id = banner.id, notShowedDate = banner.closeType.notShowedDate)
+            BannerManager.saveLocalBannerPolicy(
+                id = banner.id,
+                notShowedDate = banner.closeType.notShowedDate,
+            )
         }
     }
 
@@ -49,7 +52,7 @@ internal class PopupBannerFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         banner = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             savedInstanceState
@@ -64,13 +67,13 @@ internal class PopupBannerFragment : BottomSheetDialogFragment() {
             inflater,
             R.layout.bottom_sheet,
             container,
-            false
+            false,
         ).apply {
             bottomSheetContentView.setViewCompositionStrategy(
-                ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
+                ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed,
             )
             bottomSheetContentView.setContent {
-                PopupBannerView(banner = banner, dismiss = { dismiss() } )
+                PopupBannerView(banner = banner, dismiss = { dismiss() })
             }
         }.root
     }
