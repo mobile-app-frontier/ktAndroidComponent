@@ -136,10 +136,10 @@ OnBoardingScreen<XmlOnBoardingRoute, XmlOnBoardingVerticalSideArea>(
         OnBoardingPageOne(
             // ...
         ),
-        onBoardingTopArea = object : XmlOnBoardingVerticalSideArea {
-            // ...
-        }
-    )
+    ),
+    onBoardingTopArea = object : XmlOnBoardingVerticalSideArea {
+        // ...
+    },
 )
 ```
 
@@ -148,8 +148,7 @@ OnBoardingScreen<XmlOnBoardingRoute, XmlOnBoardingVerticalSideArea>(
 `OnBoardingScreen`은 Composable 이므로, 해당 온보딩을 띄우고자 하는 XML에 `ComposeView`를 추가 합니다.
 
 ```xml
-
-<androidx.compose.ui.platform.ComposeView android:id="@+id/composeView"/>
+<androidx.compose.ui.platform.ComposeView android:id="@+id/composeView" />
 ```
 
 ### Step 5
