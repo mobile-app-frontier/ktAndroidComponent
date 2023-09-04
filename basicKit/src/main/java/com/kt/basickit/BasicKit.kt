@@ -1,6 +1,5 @@
 package com.kt.basickit
 
-
 /**
  * Permission kit
  * function
@@ -11,6 +10,5 @@ package com.kt.basickit
  * 3. Request Permission
  */
 
-fun test(){
-
+fun test() {
 }

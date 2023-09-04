@@ -20,6 +20,5 @@ data class BottomSheetOptions(
     val borderRadius: Int = 10,
     val contentBackgroundColor: Color = Color.White,
     val contentPadding: PaddingValues = PaddingValues(20.dp, 10.dp),
-    val contentWidth: Float = 1f, // 쓸까..?
-    val contentHeight: Float? = null,
+    val contentWidth: Float = 1f, // 쓸까..?\
 )
