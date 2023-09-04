@@ -3,7 +3,7 @@
 OnBoarding은 몇 개의 스탭을 가지며 이전 또는 다음 스탭으로 이동하는 시나리오를 구현합니다.
 
 각 스탭은 고유한 라우트와 화면을 가지고 구성 됩니다.
-스탭 리스트를 가지고 온보딩 시나리오를 구현할 수 있습니다.
+스탭 목록을 통해 온보딩 시나리오를 구현할 수 있습니다.
 
 - [사용 방법 - Jetpack Compose](#how_to_use_with_compose)
 - [사용 방법 - XML](#how_to_use_with_XML)
@@ -121,7 +121,7 @@ OnBoardingScreen(
 
 ### Step 2
 
-Step1에서 지정한 XMl에 대한 데이터바인딩 콜백과, 바인딩에 값을 지정하는 메서드를 화면의 경로와 함께 넣어 [XmlOnBoardingRoute]를 구성합니다.
+Step1에서 지정한 XMl에 대한 뷰 바인딩 콜백과, 바인딩에 값을 지정하는 메서드를 화면의 경로와 함께 넣어 `XmlOnBoardingRoute`를 구성합니다.
 
 ```kotlin
 OnBoardingPageOne(
@@ -135,7 +135,7 @@ OnBoardingPageOne(
 ### Step 3
 
 OnBoarding에서 보여 주고자 하는 스탭들을 파라미터로 넣어 `OnBoardingScreen`을 생성합니다.
-`onBoardingTopArea`, `onBoardingBottomArea`에 OnBoarding 스탭 별 화면에 상관 없이 OnBoarding 내내 보여줄 뷰를 넣을 수
+`onBoardingTopArea`, `onBoardingBottomArea`에 스탭 별 화면에 상관 없이 OnBoarding 내내 보여줄 뷰를 넣을 수
 있습니다.
 
 ```kotlin
@@ -157,8 +157,7 @@ OnBoardingScreen<XmlOnBoardingRoute, XmlOnBoardingVerticalSideArea>(
 
 ```xml
 
-<androidx.compose.ui.platform.ComposeView android:id="@+id/composeView"
-    android:layout_width="match_parent" android:layout_height="match_parent" />
+<androidx.compose.ui.platform.ComposeView android:id="@+id/composeView"/>
 ```
 
 ### Step 5
@@ -183,4 +182,4 @@ composeView.setContent {
 | steps | List<OnBoardingRoute> | 사용자 정의 OnBoarding 스탭 리스트 |
 | startStep | Int | 시작 스탭 인덱스 |
 | onBoardingTopArea | OnBoardingVerticalSideArea? | 온보딩 상단 영역 표출 화 |
-| onPolling | OnBoardingVerticalSideArea? | 온보딩 하단 영역 표출 화면 |
+| onBoardingBottomArea | OnBoardingVerticalSideArea? | 온보딩 하단 영역 표출 화면 |
