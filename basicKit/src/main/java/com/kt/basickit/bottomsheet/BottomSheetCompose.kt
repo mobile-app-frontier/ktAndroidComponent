@@ -1,6 +1,5 @@
 package com.kt.basickit.bottomsheet
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
@@ -34,11 +33,20 @@ import androidx.compose.ui.zIndex
 import com.kt.basickit.bottomsheet.component.DragButton
 
 // TODO
-//  1. height option full, half, custom..
-//  2. height auto 일 때 drag
+//  1. height auto 일 때 drag..?
+//  2. Drag 버튼 커스텀..?
 
+/**
+ * Bottom sheet
+ *
+ * @param type BottomSheet 종류
+ * @param options 디자인, 기능적 옵션
+ * @param scrollState BottomSheet 컨텐츠의 scrollState
+ * @param onDismissRequest
+ * @param content BottomSheet 내부 UI 컨텐츠
+ */
 @Composable
-fun BottomSheetCompose(
+fun BottomSheet(
     type: BottomSheetType = DefaultBottomSheet,
     options: BottomSheetOptions = BottomSheetOptions(),
     scrollState: ScrollState = rememberScrollState(),
@@ -65,7 +73,7 @@ fun BottomSheetCompose(
         mutableStateOf(
             when (type) {
                 is FullBottomSheet -> {
-                    screenHeight.value
+                    screenHeight.value - 40f
                 }
 
                 is HalfBottomSheet -> {

@@ -17,17 +17,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 /**
- * BottomSheet 상단 Drag 하는 회색 버튼
+ * BottomSheet 상단에 높이 조절 할 때 사용 하는 Drag 버튼
  *
  * @param handleDrag
- * @receiver
  */
 @Composable
 fun DragButton(handleDrag: (Float) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(0.dp, 16.dp)
+            .padding(0.dp, 16.dp, 0.dp, 20.dp)
             .draggable(
                 orientation = Orientation.Vertical,
                 state = rememberDraggableState { delta ->

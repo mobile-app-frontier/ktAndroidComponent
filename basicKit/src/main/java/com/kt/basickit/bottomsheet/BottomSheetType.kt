@@ -21,6 +21,6 @@ object HalfBottomSheet : BottomSheetType()
 data class CustomBottomSheet(val height: Float) : BottomSheetType()
 
 /**
- * Contents 의 높이 만큼 올라오는 가장 기본 BottomSheet Drag 도 안됨.
+ * Contents 의 높이 만큼 올라오는 가장 기본 BottomSheet Drag 안됨.
  */
 object DefaultBottomSheet : BottomSheetType()
