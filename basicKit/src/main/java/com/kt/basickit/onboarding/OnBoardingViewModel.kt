@@ -2,7 +2,9 @@ package com.kt.basickit.onboarding
 
 import kotlinx.coroutines.flow.StateFlow
 
-// onboarding viewmodel
+/**
+ * OnBoarding 스탭 간 이동 지원.
+ */
 sealed interface OnBoardingViewModel {
     fun next()
 
