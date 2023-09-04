@@ -99,7 +99,7 @@ OnBoardingScreen(
 각 화면에서 온보딩 내비게이션 컨트롤러 또는 온보딩 진행 관련 조작이 필요하다면 `NavHostController`, `OnBoardingViewModel`을 이용할 수 있습니다.
 
 ```xml
-
+<!-- onboarding_page_one.xml Example -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
@@ -107,15 +107,7 @@ OnBoardingScreen(
             type="com.kt.basickit.onboarding.OnBoardingViewModel" />
     </data>
 
-    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="@string/onboarding_page_one" />
-        <Button android:id="@+id/xmlButton" android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:text="Next1"
-            android:onClick="@{() -> onboardingViewModel.next()}" />
-    </LinearLayout>
+    <!-- 보여줄 스탭 뷰 구현 -->
 </layout>
 ```
 
@@ -125,7 +117,7 @@ Step1에서 지정한 XMl에 대한 뷰 바인딩 콜백과, 바인딩에 값을
 
 ```kotlin
 OnBoardingPageOne(
-    binding = OnboardingPageOneBinding::inflate,
+    binding = OnboardingPageOneBinding::inflate, // onboarding_page_one.xml 에 대해 자동 생성된 뷰 바인딩
     updateBiding = { viewBinding, onBoardingViewModel ->
         viewBinding.onboardingViewModel = onBoardingViewModel
     }
