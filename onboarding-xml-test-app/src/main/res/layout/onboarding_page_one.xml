@@ -23,6 +23,5 @@
             android:layout_height="wrap_content"
             android:text="Next1"
             android:onClick="@{() -> onboardingViewModel.next()}" />
-
     </LinearLayout>
 </layout>
