@@ -168,9 +168,9 @@ composeView.setContent {
 
 ### `OnBoardingScreen`
 
-| name | Type | Description |
-| :--- | :--: | ----------: |
-| steps | List<OnBoardingRoute> | 사용자 정의 OnBoarding 스탭 리스트 |
-| startStep | Int | 시작 스탭 인덱스 |
-| onBoardingTopArea | OnBoardingVerticalSideArea? | 온보딩 상단 영역 표출 화 |
-| onBoardingBottomArea | OnBoardingVerticalSideArea? | 온보딩 하단 영역 표출 화면 |
+|         name         |            Type             |       Description        |
+|:--------------------:|:---------------------------:|:------------------------:|
+|        steps         |    List<OnBoardingRoute>    | 사용자 정의 OnBoarding 스탭 리스트 |
+|      startStep       |             Int             |        시작 스탭 인덱스         |
+|  onBoardingTopArea   | OnBoardingVerticalSideArea? |      온보딩 상단 영역 표출 화      |
+| onBoardingBottomArea | OnBoardingVerticalSideArea? |     온보딩 하단 영역 표출 화면      |
