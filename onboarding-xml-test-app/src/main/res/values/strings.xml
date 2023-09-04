@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Onboarding-xml-test-app</string>
+    <string name="onboarding_page_one">첫번째 온보딩 페이지</string>
+    <string name="onboarding_page_two">두번째 온보딩 페이지</string>
+    <string name="onboarding_page_three">세번째 온보딩 페이지</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_text">Welcome home screen!</string>
+    <string name="start_onboarding">Start Onboarding</string>
+    <string name="end_onboarding">메인으로 이동</string>
+</resources>

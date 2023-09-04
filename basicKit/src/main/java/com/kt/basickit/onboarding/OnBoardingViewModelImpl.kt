@@ -1,8 +1,10 @@
 package com.kt.basickit.onboarding
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.kt.basickit.onboarding.route.OnBoardingRoute
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -37,6 +39,7 @@ internal class OnBoardingViewModelImpl(
      * 호출 시 더 이상 진행할 스탭이 없다면 [OnBoardingComplete] 상태를 발행.
      */
     override fun next() {
+        Log.d("next", "pressed ${controllerState.value.currentStep}")
         if (controllerState.value.totalStepSize - 1 == controllerState.value.currentStep) {
             viewModelScope.launch {
                 _state.emit(
