@@ -110,7 +110,7 @@ fun BottomSheet(
 
     Popup(
         alignment = Alignment.BottomCenter,
-        onDismissRequest = { },
+        onDismissRequest = { closeSheetWithAnimation() },
         properties = PopupProperties(focusable = true),
     ) {
         Box(
