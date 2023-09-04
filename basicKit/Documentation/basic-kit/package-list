@@ -1,0 +1,155 @@
+$dokka.format:gfm-v1
+$dokka.linkExtension:md
+$dokka.location:com.kt.basickit.banner.data.model////PointingToDeclaration/basic-kit/com.kt.basickit.banner.data.model/index.md
+$dokka.location:com.kt.basickit.banner.data.model/BannerPolicyItemModel///PointingToDeclaration/basic-kit/com.kt.basickit.banner.data.model/-banner-policy-item-model/index.md
+$dokka.location:com.kt.basickit.banner.data.model/BannerPolicyItemModel/additionalInfo/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.data.model/-banner-policy-item-model/additional-info.md
+$dokka.location:com.kt.basickit.banner.data.model/BannerPolicyItemModel/appVersion/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.data.model/-banner-policy-item-model/app-version.md
+$dokka.location:com.kt.basickit.banner.data.model/BannerPolicyItemModel/category/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.data.model/-banner-policy-item-model/category.md
+$dokka.location:com.kt.basickit.banner.data.model/BannerPolicyItemModel/closeType/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.data.model/-banner-policy-item-model/close-type.md
+$dokka.location:com.kt.basickit.banner.data.model/BannerPolicyItemModel/content/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.data.model/-banner-policy-item-model/content.md
+$dokka.location:com.kt.basickit.banner.data.model/BannerPolicyItemModel/contentType/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.data.model/-banner-policy-item-model/content-type.md
+$dokka.location:com.kt.basickit.banner.data.model/BannerPolicyItemModel/id/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.data.model/-banner-policy-item-model/id.md
+$dokka.location:com.kt.basickit.banner.data.model/BannerPolicyItemModel/landingDestination/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.data.model/-banner-policy-item-model/landing-destination.md
+$dokka.location:com.kt.basickit.banner.data.model/BannerPolicyItemModel/landingType/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.data.model/-banner-policy-item-model/landing-type.md
+$dokka.location:com.kt.basickit.banner.data.model/BannerPolicyItemModel/priority/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.data.model/-banner-policy-item-model/priority.md
+$dokka.location:com.kt.basickit.banner.data.model/BannerPolicyItemModel/type/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.data.model/-banner-policy-item-model/type.md
+$dokka.location:com.kt.basickit.banner.data.source////PointingToDeclaration/basic-kit/com.kt.basickit.banner.data.source/index.md
+$dokka.location:com.kt.basickit.banner.data.source/BannerPolicyDataSource///PointingToDeclaration/basic-kit/com.kt.basickit.banner.data.source/-banner-policy-data-source/index.md
+$dokka.location:com.kt.basickit.banner.data.source/BannerPolicyDataSource/getBannerPolicy/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.data.source/-banner-policy-data-source/get-banner-policy.md
+$dokka.location:com.kt.basickit.banner.domain.entity////PointingToDeclaration/basic-kit/com.kt.basickit.banner.domain.entity/index.md
+$dokka.location:com.kt.basickit.banner.domain.entity/BannerLandingType.Companion///PointingToDeclaration/basic-kit/com.kt.basickit.banner.domain.entity/-banner-landing-type/-companion/index.md
+$dokka.location:com.kt.basickit.banner.domain.entity/BannerLandingType.InApp///PointingToDeclaration/basic-kit/com.kt.basickit.banner.domain.entity/-banner-landing-type/-in-app/index.md
+$dokka.location:com.kt.basickit.banner.domain.entity/BannerLandingType.InApp/InApp/#kotlin.String/PointingToDeclaration/basic-kit/com.kt.basickit.banner.domain.entity/-banner-landing-type/-in-app/-in-app.md
+$dokka.location:com.kt.basickit.banner.domain.entity/BannerLandingType.InApp/destination/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.domain.entity/-banner-landing-type/-in-app/destination.md
+$dokka.location:com.kt.basickit.banner.domain.entity/BannerLandingType.None///PointingToDeclaration/basic-kit/com.kt.basickit.banner.domain.entity/-banner-landing-type/-none/index.md
+$dokka.location:com.kt.basickit.banner.domain.entity/BannerLandingType.Web///PointingToDeclaration/basic-kit/com.kt.basickit.banner.domain.entity/-banner-landing-type/-web/index.md
+$dokka.location:com.kt.basickit.banner.domain.entity/BannerLandingType.Web/Web/#kotlin.String/PointingToDeclaration/basic-kit/com.kt.basickit.banner.domain.entity/-banner-landing-type/-web/-web.md
+$dokka.location:com.kt.basickit.banner.domain.entity/BannerLandingType.Web/url/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.domain.entity/-banner-landing-type/-web/url.md
+$dokka.location:com.kt.basickit.banner.domain.entity/BannerLandingType///PointingToDeclaration/basic-kit/com.kt.basickit.banner.domain.entity/-banner-landing-type/index.md
+$dokka.location:com.kt.basickit.banner.domain.entity/BannerPolicy.Companion///PointingToDeclaration/basic-kit/com.kt.basickit.banner.domain.entity/-banner-policy/-companion/index.md
+$dokka.location:com.kt.basickit.banner.domain.entity/BannerPolicy.Companion/create/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.domain.entity/-banner-policy/-companion/create.md
+$dokka.location:com.kt.basickit.banner.domain.entity/BannerPolicy///PointingToDeclaration/basic-kit/com.kt.basickit.banner.domain.entity/-banner-policy/index.md
+$dokka.location:com.kt.basickit.banner.exception////PointingToDeclaration/basic-kit/com.kt.basickit.banner.exception/index.md
+$dokka.location:com.kt.basickit.banner.exception/BannerPolicyException.FailToStartPopup///PointingToDeclaration/basic-kit/com.kt.basickit.banner.exception/-banner-policy-exception/-fail-to-start-popup/index.md
+$dokka.location:com.kt.basickit.banner.exception/BannerPolicyException.FailToStartPopup/FailToStartPopup/#kotlin.String/PointingToDeclaration/basic-kit/com.kt.basickit.banner.exception/-banner-policy-exception/-fail-to-start-popup/-fail-to-start-popup.md
+$dokka.location:com.kt.basickit.banner.exception/BannerPolicyException.InvalidState///PointingToDeclaration/basic-kit/com.kt.basickit.banner.exception/-banner-policy-exception/-invalid-state/index.md
+$dokka.location:com.kt.basickit.banner.exception/BannerPolicyException.InvalidState/InvalidState/#kotlin.String/PointingToDeclaration/basic-kit/com.kt.basickit.banner.exception/-banner-policy-exception/-invalid-state/-invalid-state.md
+$dokka.location:com.kt.basickit.banner.exception/BannerPolicyException///PointingToDeclaration/basic-kit/com.kt.basickit.banner.exception/-banner-policy-exception/index.md
+$dokka.location:com.kt.basickit.banner.fetcher////PointingToDeclaration/basic-kit/com.kt.basickit.banner.fetcher/index.md
+$dokka.location:com.kt.basickit.banner.fetcher/BannerPolicyFetcher///PointingToDeclaration/basic-kit/com.kt.basickit.banner.fetcher/-banner-policy-fetcher/index.md
+$dokka.location:com.kt.basickit.banner.fetcher/BannerPolicyFetcher/BannerPolicyFetcher/#android.content.Context#com.kt.basickit.banner.data.source.BannerPolicyDataSource#kotlin.coroutines.SuspendFunction0[kotlin.collections.Map[kotlin.String,kotlin.String]]#kotlin.coroutines.SuspendFunction1[kotlin.collections.Map[kotlin.String,kotlin.String],kotlin.Unit]#kotlin.String/PointingToDeclaration/basic-kit/com.kt.basickit.banner.fetcher/-banner-policy-fetcher/-banner-policy-fetcher.md
+$dokka.location:com.kt.basickit.banner.fetcher/BannerPolicyFetcher/fetch/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.fetcher/-banner-policy-fetcher/fetch.md
+$dokka.location:com.kt.basickit.banner.fetcher/BannerPolicyFetcher/state/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.fetcher/-banner-policy-fetcher/state.md
+$dokka.location:com.kt.basickit.banner.fetcher/BannerPolicyState.Fail///PointingToDeclaration/basic-kit/com.kt.basickit.banner.fetcher/-banner-policy-state/-fail/index.md
+$dokka.location:com.kt.basickit.banner.fetcher/BannerPolicyState.Fail/Fail/#kotlin.Throwable/PointingToDeclaration/basic-kit/com.kt.basickit.banner.fetcher/-banner-policy-state/-fail/-fail.md
+$dokka.location:com.kt.basickit.banner.fetcher/BannerPolicyState.Fail/error/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.fetcher/-banner-policy-state/-fail/error.md
+$dokka.location:com.kt.basickit.banner.fetcher/BannerPolicyState.Fetched///PointingToDeclaration/basic-kit/com.kt.basickit.banner.fetcher/-banner-policy-state/-fetched/index.md
+$dokka.location:com.kt.basickit.banner.fetcher/BannerPolicyState.Fetched/Fetched/#com.kt.basickit.banner.domain.entity.BannerPolicy#kotlin.collections.Map[kotlin.String,kotlin.String]/PointingToDeclaration/basic-kit/com.kt.basickit.banner.fetcher/-banner-policy-state/-fetched/-fetched.md
+$dokka.location:com.kt.basickit.banner.fetcher/BannerPolicyState.Fetched/localBanner/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.fetcher/-banner-policy-state/-fetched/local-banner.md
+$dokka.location:com.kt.basickit.banner.fetcher/BannerPolicyState.Fetched/remoteBanner/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.fetcher/-banner-policy-state/-fetched/remote-banner.md
+$dokka.location:com.kt.basickit.banner.fetcher/BannerPolicyState.Initial///PointingToDeclaration/basic-kit/com.kt.basickit.banner.fetcher/-banner-policy-state/-initial/index.md
+$dokka.location:com.kt.basickit.banner.fetcher/BannerPolicyState.Success///PointingToDeclaration/basic-kit/com.kt.basickit.banner.fetcher/-banner-policy-state/-success/index.md
+$dokka.location:com.kt.basickit.banner.fetcher/BannerPolicyState.Success/Success/#com.kt.basickit.banner.domain.entity.BannerPolicy/PointingToDeclaration/basic-kit/com.kt.basickit.banner.fetcher/-banner-policy-state/-success/-success.md
+$dokka.location:com.kt.basickit.banner.fetcher/BannerPolicyState.Success/willShowBanner/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.fetcher/-banner-policy-state/-success/will-show-banner.md
+$dokka.location:com.kt.basickit.banner.fetcher/BannerPolicyState///PointingToDeclaration/basic-kit/com.kt.basickit.banner.fetcher/-banner-policy-state/index.md
+$dokka.location:com.kt.basickit.banner.fetcher/BannerPolicyState/willShowBanner/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.fetcher/-banner-policy-state/will-show-banner.md
+$dokka.location:com.kt.basickit.banner.view.defaultBanner////PointingToDeclaration/basic-kit/com.kt.basickit.banner.view.defaultBanner/index.md
+$dokka.location:com.kt.basickit.banner.view.defaultBanner/DefaultBannerFragment///PointingToDeclaration/basic-kit/com.kt.basickit.banner.view.defaultBanner/-default-banner-fragment/index.md
+$dokka.location:com.kt.basickit.banner.view.defaultBanner/DefaultBannerFragment/DefaultBannerFragment/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.view.defaultBanner/-default-banner-fragment/-default-banner-fragment.md
+$dokka.location:com.kt.basickit.banner.view.defaultBanner/DefaultBannerFragment/onCreateView/#android.view.LayoutInflater#android.view.ViewGroup?#android.os.Bundle?/PointingToDeclaration/basic-kit/com.kt.basickit.banner.view.defaultBanner/-default-banner-fragment/on-create-view.md
+$dokka.location:com.kt.basickit.banner.view.defaultBanner/DefaultBannerFragment/onInflate/#android.content.Context#android.util.AttributeSet#android.os.Bundle?/PointingToDeclaration/basic-kit/com.kt.basickit.banner.view.defaultBanner/-default-banner-fragment/on-inflate.md
+$dokka.location:com.kt.basickit.banner.view.option////PointingToDeclaration/basic-kit/com.kt.basickit.banner.view.option/index.md
+$dokka.location:com.kt.basickit.banner.view.option//defaultBannerTextStyle/androidx.compose.ui.text.TextStyle.Companion#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.view.option/default-banner-text-style.md
+$dokka.location:com.kt.basickit.banner.view.option//defaultButtonTextStyle/androidx.compose.ui.text.TextStyle.Companion#/PointingToDeclaration/basic-kit/com.kt.basickit.banner.view.option/default-button-text-style.md
+$dokka.location:com.kt.basickit.banner////PointingToDeclaration/basic-kit/com.kt.basickit.banner/index.md
+$dokka.location:com.kt.basickit.banner/BannerManager///PointingToDeclaration/basic-kit/com.kt.basickit.banner/-banner-manager/index.md
+$dokka.location:com.kt.basickit.banner/BannerManager/DefaultBannerView/#kotlin.String#androidx.compose.ui.Modifier/PointingToDeclaration/basic-kit/com.kt.basickit.banner/-banner-manager/-default-banner-view.md
+$dokka.location:com.kt.basickit.banner/BannerManager/getDefaultBannerFragment/#kotlin.String/PointingToDeclaration/basic-kit/com.kt.basickit.banner/-banner-manager/get-default-banner-fragment.md
+$dokka.location:com.kt.basickit.banner/BannerManager/landingType/#/PointingToDeclaration/basic-kit/com.kt.basickit.banner/-banner-manager/landing-type.md
+$dokka.location:com.kt.basickit.banner/BannerManager/startPopupBanner/#android.content.Context#androidx.compose.ui.text.TextStyle?#androidx.compose.ui.text.TextStyle?/PointingToDeclaration/basic-kit/com.kt.basickit.banner/-banner-manager/start-popup-banner.md
+$dokka.location:com.kt.basickit.onboarding////PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/index.md
+$dokka.location:com.kt.basickit.onboarding//OnBoardingScreen/#kotlin.collections.List[TypeParam(bounds=[com.kt.basickit.onboarding.OnBoardingRoute])]#kotlin.Int#kotlin.Function2[androidx.navigation.NavHostController,com.kt.basickit.onboarding.OnBoardingViewModel,kotlin.Unit]?#kotlin.Function2[androidx.navigation.NavHostController,com.kt.basickit.onboarding.OnBoardingViewModel,kotlin.Unit]?/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-screen.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingCancel///PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-cancel/index.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingCancel/OnBoardingCancel/#kotlin.collections.List[com.kt.basickit.onboarding.OnBoardingRoute]#kotlin.Int/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-cancel/-on-boarding-cancel.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingCancel/currentStep/#/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-cancel/current-step.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingCancel/steps/#/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-cancel/steps.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingComplete///PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-complete/index.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingComplete/OnBoardingComplete/#kotlin.collections.List[com.kt.basickit.onboarding.OnBoardingRoute]#kotlin.Int/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-complete/-on-boarding-complete.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingComplete/currentStep/#/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-complete/current-step.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingComplete/steps/#/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-complete/steps.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingInProgress///PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-in-progress/index.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingInProgress/OnBoardingInProgress/#kotlin.collections.List[com.kt.basickit.onboarding.OnBoardingRoute]#kotlin.Int/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-in-progress/-on-boarding-in-progress.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingInProgress/currentStep/#/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-in-progress/current-step.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingInProgress/steps/#/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-in-progress/steps.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingRoute///PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-route/index.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingRoute/routeName/#/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-route/route-name.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingRoute/screen/#/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-route/screen.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingState///PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-state/index.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingState/currentStep/#/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-state/current-step.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingState/isCancel/#/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-state/is-cancel.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingState/nextRoute/#/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-state/next-route.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingState/steps/#/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-state/steps.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingState/totalStepSize/#/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-state/total-step-size.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingViewModel///PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-view-model/index.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingViewModel/controllerState/#/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-view-model/controller-state.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingViewModel/next/#/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-view-model/next.md
+$dokka.location:com.kt.basickit.onboarding/OnBoardingViewModel/prev/#/PointingToDeclaration/basic-kit/com.kt.basickit.onboarding/-on-boarding-view-model/prev.md
+$dokka.location:com.kt.basickit.permission////PointingToDeclaration/basic-kit/com.kt.basickit.permission/index.md
+$dokka.location:com.kt.basickit.permission//RequestPermissionEffect/#kotlin.String#kotlin.Function1[com.kt.basickit.permission.PermissionState,kotlin.Unit]/PointingToDeclaration/basic-kit/com.kt.basickit.permission/-request-permission-effect.md
+$dokka.location:com.kt.basickit.permission//RequestPermissionsEffect/#kotlin.Array[kotlin.String]#kotlin.Function1[kotlin.collections.Map[kotlin.String,com.kt.basickit.permission.PermissionState],kotlin.Unit]/PointingToDeclaration/basic-kit/com.kt.basickit.permission/-request-permissions-effect.md
+$dokka.location:com.kt.basickit.permission//currentPermissionState/#android.content.Context#kotlin.String/PointingToDeclaration/basic-kit/com.kt.basickit.permission/current-permission-state.md
+$dokka.location:com.kt.basickit.permission//currentPermissionsState/#android.content.Context#kotlin.Array[kotlin.String]/PointingToDeclaration/basic-kit/com.kt.basickit.permission/current-permissions-state.md
+$dokka.location:com.kt.basickit.permission//rememberPermissionLauncher/#kotlin.Function1[kotlin.Boolean,kotlin.Unit]/PointingToDeclaration/basic-kit/com.kt.basickit.permission/remember-permission-launcher.md
+$dokka.location:com.kt.basickit.permission//rememberPermissionsLauncher/#kotlin.Function1[kotlin.collections.Map[kotlin.String,kotlin.Boolean],kotlin.Unit]/PointingToDeclaration/basic-kit/com.kt.basickit.permission/remember-permissions-launcher.md
+$dokka.location:com.kt.basickit.permission/PermissionState.Companion///PointingToDeclaration/basic-kit/com.kt.basickit.permission/-permission-state/-companion/index.md
+$dokka.location:com.kt.basickit.permission/PermissionState.Companion/fromBoolean/#kotlin.Boolean/PointingToDeclaration/basic-kit/com.kt.basickit.permission/-permission-state/-companion/from-boolean.md
+$dokka.location:com.kt.basickit.permission/PermissionState.Companion/fromInt/#kotlin.Int/PointingToDeclaration/basic-kit/com.kt.basickit.permission/-permission-state/-companion/from-int.md
+$dokka.location:com.kt.basickit.permission/PermissionState.Denied///PointingToDeclaration/basic-kit/com.kt.basickit.permission/-permission-state/-denied/index.md
+$dokka.location:com.kt.basickit.permission/PermissionState.Grant///PointingToDeclaration/basic-kit/com.kt.basickit.permission/-permission-state/-grant/index.md
+$dokka.location:com.kt.basickit.permission/PermissionState///PointingToDeclaration/basic-kit/com.kt.basickit.permission/-permission-state/index.md
+$dokka.location:com.kt.basickit.pollingcenter////PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/index.md
+$dokka.location:com.kt.basickit.pollingcenter/PollingCenter.PollingType.Delayed///PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/-polling-center/-polling-type/-delayed/index.md
+$dokka.location:com.kt.basickit.pollingcenter/PollingCenter.PollingType.Instant///PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/-polling-center/-polling-type/-instant/index.md
+$dokka.location:com.kt.basickit.pollingcenter/PollingCenter.PollingType///PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/-polling-center/-polling-type/index.md
+$dokka.location:com.kt.basickit.pollingcenter/PollingCenter///PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/-polling-center/index.md
+$dokka.location:com.kt.basickit.pollingcenter/PollingCenter/addTask/#com.kt.basickit.pollingcenter.WorkableItem/PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/-polling-center/add-task.md
+$dokka.location:com.kt.basickit.pollingcenter/PollingCenter/cancel/#/PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/-polling-center/cancel.md
+$dokka.location:com.kt.basickit.pollingcenter/PollingCenter/initializePollingCenter/#/PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/-polling-center/initialize-polling-center.md
+$dokka.location:com.kt.basickit.pollingcenter/PollingCenter/onTerminate/#/PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/-polling-center/on-terminate.md
+$dokka.location:com.kt.basickit.pollingcenter/PollingCenter/removeAllTasks/#/PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/-polling-center/remove-all-tasks.md
+$dokka.location:com.kt.basickit.pollingcenter/PollingCenter/removeTask/#kotlin.String/PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/-polling-center/remove-task.md
+$dokka.location:com.kt.basickit.pollingcenter/PollingCenter/resume/#/PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/-polling-center/resume.md
+$dokka.location:com.kt.basickit.pollingcenter/WorkableItem.DefaultWorkableItem///PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/-workable-item/-default-workable-item/index.md
+$dokka.location:com.kt.basickit.pollingcenter/WorkableItem.DefaultWorkableItem/usingDefaultPollingInterval/#kotlin.String#com.kt.basickit.pollingcenter.PollingCenter.PollingType#kotlin.coroutines.SuspendFunction0[kotlin.Unit]/PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/-workable-item/-default-workable-item/using-default-polling-interval.md
+$dokka.location:com.kt.basickit.pollingcenter/WorkableItem///PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/-workable-item/index.md
+$dokka.location:com.kt.basickit.pollingcenter/WorkableItem/WorkableItem/#kotlin.String#com.kt.basickit.pollingcenter.PollingCenter.PollingType#kotlin.Long#kotlin.coroutines.SuspendFunction0[kotlin.Unit]/PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/-workable-item/-workable-item.md
+$dokka.location:com.kt.basickit.pollingcenter/WorkableItem/interval/#/PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/-workable-item/interval.md
+$dokka.location:com.kt.basickit.pollingcenter/WorkableItem/key/#/PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/-workable-item/key.md
+$dokka.location:com.kt.basickit.pollingcenter/WorkableItem/onPolling/#/PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/-workable-item/on-polling.md
+$dokka.location:com.kt.basickit.pollingcenter/WorkableItem/pollingType/#/PointingToDeclaration/basic-kit/com.kt.basickit.pollingcenter/-workable-item/polling-type.md
+$dokka.location:com.kt.basickit.util////PointingToDeclaration/basic-kit/com.kt.basickit.util/index.md
+$dokka.location:com.kt.basickit.util/Version.Companion///PointingToDeclaration/basic-kit/com.kt.basickit.util/-version/-companion/index.md
+$dokka.location:com.kt.basickit.util/Version.Companion/createVersion/#kotlin.String/PointingToDeclaration/basic-kit/com.kt.basickit.util/-version/-companion/create-version.md
+$dokka.location:com.kt.basickit.util/Version///PointingToDeclaration/basic-kit/com.kt.basickit.util/-version/index.md
+$dokka.location:com.kt.basickit.util/Version/Version/#kotlin.Int#kotlin.Int#kotlin.Int#kotlin.String?/PointingToDeclaration/basic-kit/com.kt.basickit.util/-version/-version.md
+$dokka.location:com.kt.basickit.util/Version/compareTo/#com.kt.basickit.util.Version/PointingToDeclaration/basic-kit/com.kt.basickit.util/-version/compare-to.md
+$dokka.location:com.kt.basickit.util/Version/major/#/PointingToDeclaration/basic-kit/com.kt.basickit.util/-version/major.md
+$dokka.location:com.kt.basickit.util/Version/minor/#/PointingToDeclaration/basic-kit/com.kt.basickit.util/-version/minor.md
+$dokka.location:com.kt.basickit.util/Version/patch/#/PointingToDeclaration/basic-kit/com.kt.basickit.util/-version/patch.md
+$dokka.location:com.kt.basickit.util/Version/preRelease/#/PointingToDeclaration/basic-kit/com.kt.basickit.util/-version/pre-release.md
+$dokka.location:com.kt.basickit////PointingToDeclaration/basic-kit/com.kt.basickit/index.md
+$dokka.location:com.kt.basickit//test/#/PointingToDeclaration/basic-kit/com.kt.basickit/test.md
+com.kt.basickit
+com.kt.basickit.banner
+com.kt.basickit.banner.data.model
+com.kt.basickit.banner.data.source
+com.kt.basickit.banner.domain.entity
+com.kt.basickit.banner.exception
+com.kt.basickit.banner.fetcher
+com.kt.basickit.banner.view.defaultBanner
+com.kt.basickit.banner.view.option
+com.kt.basickit.onboarding
+com.kt.basickit.permission
+com.kt.basickit.pollingcenter
+com.kt.basickit.util
+

@@ -17,7 +17,7 @@ import com.kt.basickit.banner.BannerManager
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicyItem
 
 @Composable
-fun PopupImageContentBannerView(modifier: Modifier = Modifier, content: PopupBannerPolicyItem.Content.Image) {
+internal fun PopupImageContentBannerView(modifier: Modifier = Modifier, content: PopupBannerPolicyItem.Content.Image) {
     val configuration = LocalConfiguration.current
     val isPortrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 
