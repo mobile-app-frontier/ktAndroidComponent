@@ -21,7 +21,7 @@ import com.kt.basickit.banner.domain.entity.BannerLandingType
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicyItem
 
 @Composable
-fun PopupHtmlContentBannerView(
+internal fun PopupHtmlContentBannerView(
     content: PopupBannerPolicyItem.Content.Html,
     landingType: BannerLandingType,
     dismiss: () -> Unit

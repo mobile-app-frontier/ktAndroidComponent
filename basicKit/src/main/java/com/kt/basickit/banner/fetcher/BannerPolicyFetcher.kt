@@ -6,7 +6,9 @@ import coil.request.ImageRequest
 import com.kt.basickit.banner.BannerManager
 import com.kt.basickit.banner.LocalBannerPolicy
 import com.kt.basickit.banner.MutableLocalBannerPolicy
+import com.kt.basickit.banner.data.source.BannerPolicyDataSource
 import com.kt.basickit.banner.domain.entity.BannerPolicy
+import com.kt.basickit.banner.domain.entity.BannerPolicyImpl
 import com.kt.basickit.banner.domain.entity.DefaultBannerPolicy
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicy
 import com.kt.basickit.banner.domain.entity.PopupBannerPolicyItem
@@ -19,19 +21,47 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.util.Calendar
 import java.util.Date
+
+/**
+ * 서버 에서 받아온 배너 정책과 단말에 저장된 정책(보여 주지 않을 배너에 대한 정보) 을 가져와
+ * 비교 하여 보여줄 배너를 보여줌.
+ *
+ * @property context
+ * @property localBannerPolicyGetter 단말에 저장된 [LocalBannerPolicy] 를 읽어 오는 로직.
+ * ex) PreferencesDataStore 에서 특정 키에 저장된 [LocalBannerPolicy] 형태의 value 를 읽어 오는 로직.
+ * @property localBannerPolicySetter 단말에 [LocalBannerPolicy] 를 저장 하는 로직.
+ * ex) PreferencesDataStore 의 특정 키에 [LocalBannerPolicy] 형태의 value 를 저장 하는 로직.
+ * @constructor crete BannerPolicyFetcher
+ *
+ *
+ * @param dataSource
+ * @param appVersion
+ */
 public class BannerPolicyFetcher(
     private val context: Context,
-    private val repository: BannerPolicyRepository,
+    dataSource: BannerPolicyDataSource,
     private val localBannerPolicyGetter: suspend () -> LocalBannerPolicy,
     private val localBannerPolicySetter: suspend (LocalBannerPolicy) -> Unit,
     appVersion: String
 ) {
     private val mutableState = MutableStateFlow<BannerPolicyState>(BannerPolicyState.Initial)
     private val appVersion = Version.createVersion(appVersion)
+    private val repository = BannerPolicyRepository(dataSource)
 
+    /**
+     * [BannerPolicyFetcher] 의 현재 상태.
+     */
     public val state: StateFlow<BannerPolicyState>
         get() = mutableState.asStateFlow()
 
+    /**
+     * remoteBannerPolicy 와 localBannerPolicy 를 동시에 fetch 하고 비교 하여 보여줄 배너를 filtering 함.
+     *
+     * - remoteBannerPolicy 와 localBannerPolicy 를 fetch 성공 하면 [state] 는 [BannerPolicyState.Fetched] 상태로 변함.
+     * - remoteBannerPolicy 와 localBannerPolicy 를 비교 하여 filtering 한 후,
+     * 유효한 로컬 배너 정책을 update & [state] 는 [BannerPolicyState.Success] 상태로 변함.
+     * - fetch 과정 중에 [Throwable] 이 발생할 경우, 내부 에서 try-catch 로 처리. [state] 는 [BannerPolicyState.Fail] 상태로 변함.
+     */
     public suspend fun fetch() {
         coroutineScope {
             try {
@@ -54,7 +84,7 @@ public class BannerPolicyFetcher(
         }
     }
 
-    private suspend fun handleBannerPolicy(remoteBanner: BannerPolicy, localBanner: LocalBannerPolicy) {
+    private suspend fun handleBannerPolicy(remoteBanner: BannerPolicyImpl, localBanner: LocalBannerPolicy) {
         // default banner filtering
         val filteredDefaultBanner = filterValidRemoteBannerPolicy(remoteBanner.defaultBanner)
 
@@ -64,7 +94,7 @@ public class BannerPolicyFetcher(
         // local 정책 update
         localBannerPolicySetter(filteredPopupBanner.second)
 
-        val bannerPolicy = BannerPolicy(
+        val bannerPolicy = BannerPolicyImpl(
             defaultBanner = filteredDefaultBanner,
             popupBanner = filteredPopupBanner.first
         )
