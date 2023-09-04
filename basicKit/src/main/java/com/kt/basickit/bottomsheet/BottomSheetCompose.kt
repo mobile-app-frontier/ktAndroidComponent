@@ -5,18 +5,12 @@ import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,30 +26,25 @@ import androidx.compose.ui.window.PopupProperties
 import androidx.compose.ui.zIndex
 import com.kt.basickit.bottomsheet.component.DragButton
 
-// TODO
-//  1. height auto 일 때 drag..?
-//  2. Drag 버튼 커스텀..?
-
 /**
  * Bottom sheet
  *
- * @param type BottomSheet 종류
  * @param options 디자인, 기능적 옵션
- * @param scrollState BottomSheet 컨텐츠의 scrollState
- * @param onDismissRequest
+ * @param onDismissRequest BottomSheet 닫을 때 실행됨.
  * @param content BottomSheet 내부 UI 컨텐츠
  */
 @Composable
 fun BottomSheet(
-    type: BottomSheetType = DefaultBottomSheet,
     options: BottomSheetOptions = BottomSheetOptions(),
-    scrollState: ScrollState = rememberScrollState(),
     onDismissRequest: () -> Unit,
     content: @Composable () -> Unit,
 ) {
     val density = LocalDensity.current
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp
+    val fullPadding = 40f // type FullBottomSheet 일 때 위에 패딩 값
+    val minimumSize = 50f // BottomSheet 최소 높이
+    val animationDuration = 200
 
     // 켜고 끌때 Transition Animation
     val animationState = remember {
@@ -64,48 +53,54 @@ fun BottomSheet(
         }
     }
 
-    // willClose? animateBeforeClose? ...?
-    fun prepareToClose() {
+    // BottomSheet 닫히기 전 Animation
+    fun closeSheetWithAnimation() {
         animationState.targetState = false
     }
 
-    var offsetY by remember {
-        mutableStateOf(
-            when (type) {
-                is FullBottomSheet -> {
-                    screenHeight.value - 40f
-                }
+    val maximumHeight = when (options.type) {
+        is FullBottomSheet -> {
+            screenHeight.value - fullPadding
+        }
 
-                is HalfBottomSheet -> {
-                    screenHeight.value / 2
-                }
+        is HalfBottomSheet -> {
+            screenHeight.value / 2
+        }
 
-                is CustomBottomSheet -> {
-                    type.height
-                }
+        is CustomBottomSheet -> {
+            options.type.height
+        }
 
-                is DefaultBottomSheet -> {
-                    40f
-                }
-            },
-        )
-    }
-
-    fun checkCloseState(): Boolean {
-        return if (type is FullBottomSheet && offsetY.dp < (screenHeight / 2)) {
-            true
-        } else if (type is HalfBottomSheet && offsetY.dp < (screenHeight / 4)) {
-            true
-        } else {
-            offsetY < 50f
+        is DefaultBottomSheet -> { // 의미 없음 안씀 ㅎㅎ
+            0f
         }
     }
 
-    fun handleDrag(delta: Float) {
-        offsetY -= (delta / 2) // 감도 조절..
+    var offsetY by remember { mutableStateOf(maximumHeight) }
 
-        if (checkCloseState()) {
-            prepareToClose()
+    fun isCloseHeightReached(): Boolean {
+        return if (options.type is FullBottomSheet && offsetY.dp < (screenHeight / 2)) {
+            true
+        } else {
+            offsetY < minimumSize
+        }
+    }
+
+    // Drag 중
+    fun onDrag(delta: Float) {
+        val executedDelta = (delta / 3) // 감도 조절..
+
+        // 이상 행동 막음
+        if ((offsetY - executedDelta) > maximumHeight || offsetY - executedDelta < 0) {
+            return
+        }
+        offsetY -= executedDelta
+    }
+
+    // Drag 끝나는 시점에 BottomSheet을 닫아야 할지 판단.
+    fun dragEnd() {
+        if (isCloseHeightReached()) {
+            closeSheetWithAnimation()
         }
     }
 
@@ -122,74 +117,56 @@ fun BottomSheet(
             modifier = Modifier
                 .fillMaxSize()
                 .noRippleClickable {
-                    prepareToClose()
+                    closeSheetWithAnimation()
                 }
                 .background(color = options.dimmingColor)
                 .imePadding(),
             contentAlignment = Alignment.BottomCenter,
         ) {
             AnimatedVisibility(
-                modifier = Modifier,
                 visibleState = animationState,
                 enter = slideInVertically(
-                    animationSpec = tween(durationMillis = 170),
+                    animationSpec = tween(durationMillis = animationDuration),
                 ) {
                     with(density) { offsetY.dp.roundToPx() }
                 },
                 exit = slideOutVertically(
-                    animationSpec = tween(durationMillis = 150),
+                    animationSpec = tween(durationMillis = animationDuration),
                 ) {
                     with(density) { offsetY.dp.roundToPx() }
                 },
             ) {
-                when (type) {
-                    is DefaultBottomSheet ->
+                when (options.type) {
+                    is DraggableType ->
                         Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier
-                                .background(
-                                    options.contentBackgroundColor,
-                                    shape = RoundedCornerShape(
-                                        options.borderRadius,
-                                        options.borderRadius,
-                                        0,
-                                        0,
-                                    ),
-                                )
-                                .padding(options.contentPadding)
-                                .fillMaxWidth(options.contentWidth)
-                                .verticalScroll(scrollState)
+//                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = options.containerModifier
                                 .noRippleClickable {}
-                                .zIndex(1.0f),
+                                .zIndex(1.0f)
+                                .height(offsetY.dp),
                         ) {
+                            if (options.type.isDraggable && options.dragButton == null) {
+                                DragButton(
+                                    onDrag = { delta -> onDrag(delta) },
+                                    dragEnd = { dragEnd() },
+                                )
+                            } else if (options.type.isDraggable && options.dragButton != null) {
+                                options.dragButton?.let { button ->
+                                    button(
+                                        onDrag = { onDrag(it) },
+                                        dragEnd = { dragEnd() },
+                                    )
+                                }
+                            }
                             content()
                         }
 
                     else ->
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier
-                                .background(
-                                    options.contentBackgroundColor,
-                                    shape = RoundedCornerShape(
-                                        options.borderRadius,
-                                        options.borderRadius,
-                                        0,
-                                        0,
-                                    ),
-                                )
-                                .padding(options.contentPadding)
-                                .fillMaxWidth(options.contentWidth)
-                                .verticalScroll(scrollState)
+                        Box(
+                            modifier = options.containerModifier
                                 .noRippleClickable {}
-                                .height(offsetY.dp)
                                 .zIndex(1.0f),
                         ) {
-                            if (options.isDraggable) {
-                                DragButton(
-                                    handleDrag = { delta -> handleDrag(delta) },
-                                )
-                            }
                             content()
                         }
                 }
