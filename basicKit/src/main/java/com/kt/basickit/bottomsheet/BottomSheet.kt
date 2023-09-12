@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import androidx.compose.ui.zIndex
-import com.kt.basickit.bottomsheet.component.DragButton
+import com.kt.basickit.bottomsheet.component.DefaultDragButton
 
 /**
  * Bottom sheet
@@ -58,28 +58,38 @@ fun BottomSheet(
         animationState.targetState = false
     }
 
+    val bottomSheetFullSize = screenHeight.value - fullPadding
+
     val maximumHeight = when (options.type) {
-        is FullBottomSheet -> {
-            screenHeight.value - fullPadding
+        is BottomSheetType.Full -> {
+            bottomSheetFullSize
         }
 
-        is HalfBottomSheet -> {
+        is BottomSheetType.Half -> {
             screenHeight.value / 2
         }
 
-        is CustomBottomSheet -> {
-            options.type.height
+        is BottomSheetType.Custom -> {
+            options.type.maxHeight ?: bottomSheetFullSize
         }
 
-        is DefaultBottomSheet -> { // 의미 없음 안씀 ㅎㅎ
+        is BottomSheetType.Default -> { // 의미 없음 안씀 ㅎㅎ
             0f
         }
     }
 
-    var offsetY by remember { mutableStateOf(maximumHeight) }
+    var offsetY by remember {
+        mutableStateOf(
+            if (options.type is BottomSheetType.Custom) {
+                options.type.minHeight
+            } else {
+                maximumHeight
+            },
+        )
+    }
 
     fun isCloseHeightReached(): Boolean {
-        return if (options.type is FullBottomSheet && offsetY.dp < (screenHeight / 2)) {
+        return if (options.type is BottomSheetType.Full && offsetY.dp < (screenHeight / 2)) {
             true
         } else {
             offsetY < minimumSize
@@ -109,8 +119,10 @@ fun BottomSheet(
     }
 
     Popup(
-        alignment = Alignment.BottomCenter,
-        onDismissRequest = { closeSheetWithAnimation() },
+        alignment = Alignment.TopStart,
+        onDismissRequest = {
+            closeSheetWithAnimation()
+        },
         properties = PopupProperties(focusable = true),
     ) {
         Box(
@@ -137,7 +149,7 @@ fun BottomSheet(
                 },
             ) {
                 when (options.type) {
-                    is DraggableType ->
+                    is BottomSheetType.Draggable ->
                         Column(
 //                            horizontalAlignment = Alignment.CenterHorizontally,
                             modifier = options.containerModifier
@@ -145,18 +157,16 @@ fun BottomSheet(
                                 .zIndex(1.0f)
                                 .height(offsetY.dp),
                         ) {
-                            if (options.type.isDraggable && options.dragButton == null) {
-                                DragButton(
-                                    onDrag = { delta -> onDrag(delta) },
-                                    dragEnd = { dragEnd() },
-                                )
-                            } else if (options.type.isDraggable && options.dragButton != null) {
+                            if (options.type.isDraggable) {
                                 options.dragButton?.let { button ->
                                     button(
                                         onDrag = { onDrag(it) },
                                         dragEnd = { dragEnd() },
                                     )
-                                }
+                                } ?: DefaultDragButton(
+                                    onDrag = { delta -> onDrag(delta) },
+                                    dragEnd = { dragEnd() },
+                                )
                             }
                             content()
                         }
