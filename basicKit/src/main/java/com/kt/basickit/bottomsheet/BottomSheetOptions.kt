@@ -24,7 +24,7 @@ typealias HandleDrag = (Float) -> Unit
  * @constructor 모든 요소는 기본 값이 있어서 따로 지정 하지 않으면 기본 BottomSheet 디자인이 적용됨.
  */
 data class BottomSheetOptions(
-    val type: BottomSheetType = DefaultBottomSheet,
+    val type: BottomSheetType = BottomSheetType.Default,
     val dimmingColor: Color = Color.Gray.copy(alpha = 0.2f),
     val containerModifier: Modifier = Modifier
         .background(
